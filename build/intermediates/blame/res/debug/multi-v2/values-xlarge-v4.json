@@ -1,0 +1,43 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\StudioProject\\Dining\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-xlarge-v4\\values-xlarge-v4.xml",
+            "map": [
+                {
+                    "source": "D:\\gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-21.0.3.aar\\eea2d1bcda6aec884ab56140563a72db\\res\\values-xlarge\\values.xml",
+                    "from": {
+                        "startLines": "3,5,7,8,9,10,12",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "56,134,199,266,333,399,466",
+                        "endColumns": "76,63,66,66,65,65,54",
+                        "endOffsets": "128,193,261,328,394,460,516"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,10",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,132,196,263,330,396,569",
+                        "endColumns": "76,63,66,66,65,65,54",
+                        "endOffsets": "127,191,258,325,391,457,619"
+                    }
+                },
+                {
+                    "source": "D:\\StudioProject\\Dining\\common(new)\\build\\intermediates\\bundles\\debug\\res\\values-xlarge-v4\\values-xlarge-v4.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,108",
+                        "endColumns": "52,53",
+                        "endOffsets": "103,157"
+                    },
+                    "to": {
+                        "startLines": "8,9",
+                        "startColumns": "4,4",
+                        "startOffsets": "462,515",
+                        "endColumns": "52,53",
+                        "endOffsets": "510,564"
+                    }
+                }
+            ]
+        }
+    ]
+}

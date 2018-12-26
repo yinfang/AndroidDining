@@ -1,0 +1,777 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:2:1-162:12
+INJECTED from D:\StudioProject\Dining\AndroidManifest.xml:2:1-162:12
+INJECTED from D:\StudioProject\Dining\AndroidManifest.xml:2:1-162:12
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:2:1-220:12
+MERGED from [com.trello:rxlifecycle-android:1.0] D:\gradle\caches\transforms-1\files-1.1\rxlifecycle-android-1.0.aar\3380bdf68d940661b1931540c7a3397c\AndroidManifest.xml:13:1-19:12
+MERGED from [com.android.support:cardview-v7:23.1.0] D:\gradle\caches\transforms-1\files-1.1\cardview-v7-23.1.0.aar\e20ac4b23fd6d3d93d59ec3ae21654fb\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:21.0.3] D:\gradle\caches\transforms-1\files-1.1\appcompat-v7-21.0.3.aar\eea2d1bcda6aec884ab56140563a72db\AndroidManifest.xml:14:4-17:12
+MERGED from [com.android.support:support-v4:23.1.0] D:\gradle\caches\transforms-1\files-1.1\support-v4-23.1.0.aar\6cb8491da31bad4b3503cbc0d86eb59f\AndroidManifest.xml:17:1-24:12
+MERGED from [com.jakewharton.rxbinding:rxbinding:0.4.0] D:\gradle\caches\transforms-1\files-1.1\rxbinding-0.4.0.aar\c4a936fae1b6c6dc7f08ce93be027cd8\AndroidManifest.xml:2:1-8:12
+MERGED from [io.reactivex:rxandroid:1.1.0] D:\gradle\caches\transforms-1\files-1.1\rxandroid-1.1.0.aar\71d47c5ed31b7591fb2ebc7d91286de6\AndroidManifest.xml:15:1-21:12
+INJECTED from D:\StudioProject\Dining\AndroidManifest.xml:2:1-162:12
+INJECTED from D:\StudioProject\Dining\AndroidManifest.xml:2:1-162:12
+	package
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:3:5-33
+	android:versionName
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:5:5-32
+		INJECTED from D:\StudioProject\Dining\AndroidManifest.xml
+		INJECTED from D:\StudioProject\Dining\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:4:5-29
+		INJECTED from D:\StudioProject\Dining\AndroidManifest.xml
+		INJECTED from D:\StudioProject\Dining\AndroidManifest.xml
+uses-sdk
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:6:5-8:41
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [com.trello:rxlifecycle-android:1.0] D:\gradle\caches\transforms-1\files-1.1\rxlifecycle-android-1.0.aar\3380bdf68d940661b1931540c7a3397c\AndroidManifest.xml:17:5-44
+MERGED from [com.trello:rxlifecycle-android:1.0] D:\gradle\caches\transforms-1\files-1.1\rxlifecycle-android-1.0.aar\3380bdf68d940661b1931540c7a3397c\AndroidManifest.xml:17:5-44
+MERGED from [com.android.support:cardview-v7:23.1.0] D:\gradle\caches\transforms-1\files-1.1\cardview-v7-23.1.0.aar\e20ac4b23fd6d3d93d59ec3ae21654fb\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:cardview-v7:23.1.0] D:\gradle\caches\transforms-1\files-1.1\cardview-v7-23.1.0.aar\e20ac4b23fd6d3d93d59ec3ae21654fb\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:21.0.3] D:\gradle\caches\transforms-1\files-1.1\appcompat-v7-21.0.3.aar\eea2d1bcda6aec884ab56140563a72db\AndroidManifest.xml:15:5-42
+MERGED from [com.android.support:appcompat-v7:21.0.3] D:\gradle\caches\transforms-1\files-1.1\appcompat-v7-21.0.3.aar\eea2d1bcda6aec884ab56140563a72db\AndroidManifest.xml:15:5-42
+MERGED from [com.android.support:support-v4:23.1.0] D:\gradle\caches\transforms-1\files-1.1\support-v4-23.1.0.aar\6cb8491da31bad4b3503cbc0d86eb59f\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.0] D:\gradle\caches\transforms-1\files-1.1\support-v4-23.1.0.aar\6cb8491da31bad4b3503cbc0d86eb59f\AndroidManifest.xml:20:5-43
+MERGED from [com.jakewharton.rxbinding:rxbinding:0.4.0] D:\gradle\caches\transforms-1\files-1.1\rxbinding-0.4.0.aar\c4a936fae1b6c6dc7f08ce93be027cd8\AndroidManifest.xml:6:5-44
+MERGED from [com.jakewharton.rxbinding:rxbinding:0.4.0] D:\gradle\caches\transforms-1\files-1.1\rxbinding-0.4.0.aar\c4a936fae1b6c6dc7f08ce93be027cd8\AndroidManifest.xml:6:5-44
+MERGED from [io.reactivex:rxandroid:1.1.0] D:\gradle\caches\transforms-1\files-1.1\rxandroid-1.1.0.aar\71d47c5ed31b7591fb2ebc7d91286de6\AndroidManifest.xml:19:5-43
+MERGED from [io.reactivex:rxandroid:1.1.0] D:\gradle\caches\transforms-1\files-1.1\rxandroid-1.1.0.aar\71d47c5ed31b7591fb2ebc7d91286de6\AndroidManifest.xml:19:5-43
+	android:targetSdkVersion
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:8:9-38
+	android:minSdkVersion
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:7:9-35
+uses-permission#android.permission.NFC
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:10:5-62
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:10:22-59
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:11:5-79
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:30:5-79
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:30:5-79
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:11:22-76
+uses-permission#android.permission.SET_DEBUG_APP
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:12:5-72
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:45:5-72
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:45:5-72
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:12:22-69
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:13:5-75
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:34:5-75
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:34:5-75
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:13:22-72
+uses-permission#android.permission.INTERNET
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:14:5-67
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:38:5-67
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:38:5-67
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:14:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:15:5-81
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:36:5-81
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:36:5-81
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:15:22-78
+uses-permission#android.permission.CLEAR_APP_CACHE
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:16:5-74
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:51:5-74
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:51:5-74
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:16:22-71
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:17:5-73
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:57:5-73
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:57:5-73
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:17:22-70
+uses-permission#android.permission.VIBRATE
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:18:5-66
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:56:5-66
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:56:5-66
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:18:22-63
+uses-permission#android.permission.FLASHLIGHT
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:19:5-69
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:19:22-66
+uses-permission#android.permission.CAMERA
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:20:5-65
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:20:22-62
+uses-permission#android.permission.READ_LOGS
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:21:5-68
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:42:5-68
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:42:5-68
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:21:22-65
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:22:5-76
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:50:5-76
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:50:5-76
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:22:22-73
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:23:5-76
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:32:5-76
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:32:5-76
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:23:22-73
+uses-permission#android.permission.CHANGE_CONFIGURATION
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:24:5-79
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:24:22-76
+uses-feature#android.hardware.camera
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:26:5-28:35
+	android:required
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:28:9-32
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:27:9-47
+uses-feature#android.hardware.camera.autofocus
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:29:5-31:35
+	android:required
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:31:9-32
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:30:9-57
+uses-feature#android.hardware.camera.front
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:32:5-34:36
+	android:required
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:34:9-33
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:33:9-53
+uses-feature#android.hardware.camera.flash
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:35:5-37:36
+	android:required
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:37:9-33
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:36:9-53
+uses-feature#android.hardware.nfc.hce
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:38:5-61
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:38:19-58
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:40:5-80
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:63:5-80
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:63:5-80
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:40:22-77
+application
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:42:5-160:19
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:78:5-218:19
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:78:5-218:19
+MERGED from [com.android.support:cardview-v7:23.1.0] D:\gradle\caches\transforms-1\files-1.1\cardview-v7-23.1.0.aar\e20ac4b23fd6d3d93d59ec3ae21654fb\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:cardview-v7:23.1.0] D:\gradle\caches\transforms-1\files-1.1\cardview-v7-23.1.0.aar\e20ac4b23fd6d3d93d59ec3ae21654fb\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:21.0.3] D:\gradle\caches\transforms-1\files-1.1\appcompat-v7-21.0.3.aar\eea2d1bcda6aec884ab56140563a72db\AndroidManifest.xml:16:5-19
+MERGED from [com.android.support:appcompat-v7:21.0.3] D:\gradle\caches\transforms-1\files-1.1\appcompat-v7-21.0.3.aar\eea2d1bcda6aec884ab56140563a72db\AndroidManifest.xml:16:5-19
+MERGED from [com.android.support:support-v4:23.1.0] D:\gradle\caches\transforms-1\files-1.1\support-v4-23.1.0.aar\6cb8491da31bad4b3503cbc0d86eb59f\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.0] D:\gradle\caches\transforms-1\files-1.1\support-v4-23.1.0.aar\6cb8491da31bad4b3503cbc0d86eb59f\AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:47:9-41
+	xmlns:tools
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:42:18-64
+	android:debuggable
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:45:9-34
+	android:largeHeap
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:83:9-33
+	android:icon
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:46:9-38
+		REJECTED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:81:9-38
+	android:allowBackup
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:44:9-36
+		REJECTED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:80:9-36
+	android:theme
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:48:9-40
+		REJECTED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:84:9-62
+	tools:replace
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:49:9-72
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:43:9-56
+meta-data#UMENG_APPKEY
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:50:9-52:56
+	android:value
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:52:13-53
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:51:13-40
+meta-data#UMENG_CHANNEL
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:53:9-55:44
+	android:value
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:55:13-41
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:54:13-41
+activity#com.clubank.device.SplashActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:57:9-68:20
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:62:13-49
+	android:label
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:60:13-45
+	android:excludeFromRecents
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:59:13-47
+	android:noHistory
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:61:13-37
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:58:13-61
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:63:13-67:29
+action#android.intent.action.MAIN
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:64:17-69
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:64:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:66:17-77
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:66:27-74
+activity#com.clubank.device.LoginActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:69:9-71:49
+	android:excludeFromRecents
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:71:13-46
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:70:13-60
+activity#com.clubank.device.MainActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:72:9-74:52
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:74:13-49
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:73:13-59
+activity#com.clubank.device.TableActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:75:9-69
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:75:19-66
+activity#com.clubank.device.ChangeBillInfo
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:76:9-70
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:76:19-67
+activity#com.clubank.device.QuickOpenActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:77:9-73
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:77:19-70
+activity#com.clubank.device.AboutActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:78:9-69
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:78:19-66
+activity#com.clubank.device.OrderActionActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:79:9-75
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:79:19-72
+activity#com.clubank.device.SettingActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:80:9-71
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:80:19-68
+activity#com.clubank.device.BaseActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:81:9-68
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:98:9-68
+MERGED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:98:9-68
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:81:19-65
+activity#com.clubank.device.OrderDishListActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:82:9-77
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:82:19-74
+activity#com.clubank.device.OrderQuickOrderActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:83:9-79
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:83:19-76
+activity#com.clubank.device.OrderOrderedActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:84:9-76
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:84:19-73
+activity#com.clubank.device.OrderDiscountActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:85:9-77
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:85:19-74
+activity#com.clubank.device.UpdateDataActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:86:9-74
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:86:19-71
+activity#com.clubank.device.ChangeTableActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:87:9-75
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:87:19-72
+activity#com.clubank.device.ItemDiscountActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:88:9-76
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:88:19-73
+activity#com.clubank.device.ChargeActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:89:9-70
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:89:19-67
+activity#com.clubank.device.ChargeListActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:90:9-74
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:90:19-71
+activity#com.clubank.device.QueryBillActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:91:9-73
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:91:19-70
+activity#com.clubank.device.BillListActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:92:9-72
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:92:19-69
+activity#com.clubank.device.SoldOutActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:93:9-71
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:93:19-68
+activity#com.clubank.device.DelayedActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:94:9-71
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:94:19-68
+activity#com.clubank.device.PrinterActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:95:9-71
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:95:19-68
+activity#com.clubank.device.DishPagerActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:96:9-73
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:96:19-70
+activity#com.clubank.device.BaseActionActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:97:9-74
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:97:19-71
+activity#com.clubank.device.BaseAreaTableActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:98:9-77
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:98:19-74
+activity#com.clubank.device.FeedbackActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:99:9-72
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:99:19-69
+activity#com.clubank.device.SubmitConfirmActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:100:9-77
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:100:19-74
+activity#com.clubank.device.ChargeBillActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:101:9-74
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:101:19-71
+activity#com.clubank.device.CustomDishActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:102:9-74
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:102:19-71
+activity#com.clubank.device.SelectMa
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:103:9-64
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:103:19-61
+activity#com.clubank.device.ChargeQueryBill
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:104:9-71
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:104:19-68
+activity#com.clubank.device.DishJianListActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:105:9-76
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:105:19-73
+activity#com.clubank.device.DishJianPagerActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:106:9-77
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:106:19-74
+activity#com.clubank.device.PackageDetailActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:107:9-77
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:107:19-74
+activity#com.clubank.device.DishCommentActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:110:9-113:53
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:113:13-50
+	android:configChanges
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:112:13-74
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:111:13-66
+activity#com.clubank.device.CheckinList
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:114:9-67
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:114:19-64
+activity#com.zxing.android.CaptureActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:115:9-128:20
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:119:13-49
+	android:clearTaskOnLaunch
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:117:13-45
+	android:stateNotNeeded
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:120:13-42
+	android:windowSoftInputMode
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:122:13-60
+	android:configChanges
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:118:13-63
+	android:theme
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:121:13-71
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:116:13-61
+intent-filter#android.intent.category.DEFAULT+com.google.zxing.client.android.SCAN
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:123:13-127:29
+action#com.google.zxing.client.android.SCAN
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:124:17-79
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:124:25-76
+category#android.intent.category.DEFAULT
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:126:17-76
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:126:27-73
+activity#com.clubank.device.SelectCookieTypeActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:129:9-131:52
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:131:13-49
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:130:13-71
+activity#com.clubank.device.DebugActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:132:9-134:61
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:134:13-49
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:133:13-60
+activity#com.clubank.device.DebugDetailActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:135:9-137:61
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:137:13-49
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:136:13-66
+activity#com.clubank.device.NFCMainActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:138:9-140:61
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:140:13-49
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:139:13-62
+activity#com.clubank.device.SingleDiscountActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:141:9-145:20
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:143:13-49
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:142:13-69
+activity#com.clubank.device.CheckinListTwo
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:146:9-150:20
+	android:screenOrientation
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:148:13-49
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:147:13-61
+activity#com.clubank.device.MemCardListActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:151:9-75
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:151:19-72
+activity#com.clubank.device.CheckoutPaymentActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:152:9-79
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:152:19-76
+activity#com.clubank.device.ChectoutPaySuccessfulActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:153:9-85
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:153:19-82
+activity#com.clubank.device.CheckoutPayOnlineActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:154:9-81
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:154:19-78
+activity#com.clubank.device.MemberAccountActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:155:9-77
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:155:19-74
+activity#com.clubank.device.SignatureActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:156:9-73
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:156:19-70
+activity#com.easier.code.util.CaptureActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:157:9-73
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:157:19-70
+activity#com.clubank.device.QueryBreakfastTicketActivity
+ADDED from D:\StudioProject\Dining\AndroidManifest.xml:158:9-84
+	android:name
+		ADDED from D:\StudioProject\Dining\AndroidManifest.xml:158:19-81
+meta-data#com.clubank.config.GlideConfiguration
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:24:5-26:39
+	android:value
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:26:9-36
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:9-61
+uses-permission#android.permission.GET_TASKS
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:40:5-68
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:40:22-65
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:43:5-79
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:43:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:44:5-81
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:44:22-78
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:46:5-71
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:46:22-68
+uses-permission#android.permission.USE_CREDENTIALS
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:47:5-74
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:47:22-71
+uses-permission#android.permission.MANAGE_ACCOUNTS
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:48:5-74
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:48:22-71
+uses-permission#android.permission.ACCESS_DOWNLOAD_MANAGER
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:49:5-82
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:49:22-79
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:52:5-84
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:52:22-81
+uses-permission#android.permission.READ_CONTACTS
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:53:5-72
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:53:22-69
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:54:5-81
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:54:22-78
+uses-permission#android.permission.RESTART_PACKAGES
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:55:5-75
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:55:22-72
+uses-permission#android.permission.KILL_BACKGROUND_PROCESSES
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:59:5-84
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:59:22-81
+uses-permission#android.permission.RECEIVE_USER_PRESENT
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:61:5-79
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:61:22-76
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:62:5-68
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:62:22-65
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:64:5-78
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:64:22-75
+uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:67:5-89
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:67:22-86
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:68:5-79
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:68:22-76
+supports-screens
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:70:5-76:40
+	android:largeScreens
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:72:9-36
+	android:smallScreens
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:75:9-37
+	android:normalScreens
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:73:9-38
+	android:xlargeScreens
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:76:9-37
+	android:resizeable
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:74:9-34
+	android:anyDensity
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:71:9-34
+uses-library#com.google.android.maps
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:85:9-87:40
+	android:required
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:87:13-37
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:86:13-51
+activity#com.clubank.device.ImageLargeActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:89:9-96:20
+	android:label
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:91:13-45
+	android:theme
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:92:13-55
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:90:13-65
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:93:13-95:72
+	android:value
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:95:17-69
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:94:17-63
+activity#com.clubank.device.WebViewActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:97:9-71
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:97:19-68
+activity#com.clubank.device.BaseTabActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:99:9-71
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:99:19-68
+activity#com.clubank.device.DownloadActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:100:9-72
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:100:19-69
+activity#com.clubank.device.WXEntryActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:101:9-71
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:101:19-68
+activity#com.clubank.device.ImageGridActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:102:9-73
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:102:19-70
+service#com.baidu.location.f
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:104:9-107:41
+	android:process
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:107:13-38
+	android:enabled
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:106:13-35
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:105:13-48
+service#cn.jpush.android.service.DownloadService
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:110:9-113:40
+	android:enabled
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:112:13-35
+	android:exported
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:113:13-37
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:111:13-68
+service#cn.jpush.android.service.PushService
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:116:9-126:19
+	android:enabled
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:118:13-35
+	android:exported
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:119:13-37
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:117:13-64
+intent-filter#cn.jpush.android.intent.PUSH_TIME+cn.jpush.android.intent.PushService+cn.jpush.android.intent.REGISTER+cn.jpush.android.intent.REPORT
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:120:13-125:29
+action#cn.jpush.android.intent.REGISTER
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:121:17-75
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:121:25-72
+action#cn.jpush.android.intent.REPORT
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:122:17-73
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:122:25-70
+action#cn.jpush.android.intent.PushService
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:123:17-78
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:123:25-75
+action#cn.jpush.android.intent.PUSH_TIME
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:124:17-76
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:124:25-73
+receiver#cn.jpush.android.service.AlarmReceiver
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:128:9-75
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:128:19-72
+meta-data#JPUSH_CHANNEL
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:130:9-132:49
+	android:value
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:132:13-46
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:131:13-41
+activity#com.unionpay.uppay.PayActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:137:9-143:58
+	android:screenOrientation
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:142:13-49
+	android:label
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:141:13-45
+	android:excludeFromRecents
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:140:13-46
+	android:windowSoftInputMode
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:143:13-55
+	android:configChanges
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:139:13-63
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:138:13-58
+activity#com.unionpay.UPPayWapActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:145:9-149:58
+	android:screenOrientation
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:148:13-49
+	android:windowSoftInputMode
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:149:13-55
+	android:configChanges
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:147:13-63
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:146:13-57
+activity#com.umeng.socialize.editorpage.ShareActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:152:9-155:54
+	android:excludeFromRecents
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:154:13-46
+	android:theme
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:155:13-51
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:153:13-72
+activity#com.umeng.socialize.view.ShareActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:158:9-164:71
+	android:launchMode
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:161:13-44
+	android:windowSoftInputMode
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:164:13-68
+	android:noHistory
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:162:13-37
+	android:configChanges
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:160:13-57
+	android:theme
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:163:13-50
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:159:13-66
+activity#com.tencent.tauth.AuthActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:169:9-181:20
+	android:launchMode
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:171:13-44
+	android:noHistory
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:172:13-37
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:170:13-58
+intent-filter#android.intent.action.VIEW+android.intent.category.BROWSABLE+android.intent.category.DEFAULT
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:173:13-180:29
+action#android.intent.action.VIEW
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:174:17-69
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:174:25-66
+category#android.intent.category.BROWSABLE
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:177:17-78
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:177:27-75
+data
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:179:17-59
+	android:scheme
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:179:23-56
+activity#com.tencent.connect.common.AssistActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:182:9-185:75
+	android:screenOrientation
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:184:13-49
+	android:theme
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:185:13-72
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:183:13-69
+activity#com.umeng.soexample.wxapi.WXEntryActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:188:9-193:75
+	android:screenOrientation
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:192:13-49
+	android:exported
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:191:13-36
+	android:configChanges
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:190:13-74
+	android:theme
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:193:13-72
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:189:13-69
+activity#com.clubank.common.WBShareActivity
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:196:9-205:20
+	android:screenOrientation
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:199:13-49
+	android:configChanges
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:198:13-63
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:197:13-62
+intent-filter#android.intent.category.DEFAULT+com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:200:13-204:29
+action#com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:201:17-92
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:201:25-89
+activity#com.sina.weibo.sdk.component.WeiboSdkBrowser
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:206:9-210:58
+	android:windowSoftInputMode
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:210:13-55
+	android:exported
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:209:13-37
+	android:configChanges
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:208:13-63
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:207:13-72
+service#com.sina.weibo.sdk.net.DownloadService
+ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:212:9-214:40
+	android:exported
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:214:13-37
+	android:name
+		ADDED from [:common(new)] D:\StudioProject\Dining\common(new)\build\intermediates\manifests\full\debug\AndroidManifest.xml:213:13-66
