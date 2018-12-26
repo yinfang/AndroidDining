@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root action="login">
+	<property name="result_code">0</property>
+	<property name="error_message">Success</property>
+</root>

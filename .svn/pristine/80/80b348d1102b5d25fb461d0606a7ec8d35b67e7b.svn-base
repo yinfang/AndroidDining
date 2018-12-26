@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/choosebackground"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/system_set"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@drawable/lvi"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="showUri"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/lbl_server_connection_address"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/wsUrl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/lbl_server_connection_address"
+                        android:textColor="@color/my_cyan"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/pref_popup_qty_window_summary"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/popupQtyWindow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/pref_popup_cook_window_summary"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/popupCookWindow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="false"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/lbl_quick_input_lock_number"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/quickInputLockNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/pref_report_printer_error_summary"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/alertPrinterWarning"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <LinearLayout
+                    android:id="@+id/row_printerQueryInterval"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@drawable/lvi"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="selectValue"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/pref_printer_alert_period_summary"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/printerQueryInterval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text=""
+                        android:textColor="@color/my_cyan"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/pref_printer_alert_sound_summary"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/warningSound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/pref_printer_alert_vibrate_summary"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/warningVibration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:id="@+id/card_no_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:text="@string/is_card_no_input"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#505050"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:text="@string/card_no_input"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:id="@+id/inputcardno"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/person_num"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/guestsnum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="false"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/ganka"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/ganka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="false"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/jiezhnag"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/jiezhang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="false"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/jizhang"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/jizhang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/weipay"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/weipay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/alipay"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/alipay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+                <!--打折取整隐藏掉-->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/disaccount_int"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/disaccountint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="false"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/version_set"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/has_customflavor"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/customFlavor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="false"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frame_flavorClassify"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/flavor_classify"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/flavorClassify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="false"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/kitchen_type"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#505050"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/kitchentype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="5dp"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:contentDescription="@string/lbl_content_des"
+                        android:onClick="toggle" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/longchoosebutton"
+                    android:onClick="logout"
+                    android:text="@string/lbl_logout"
+                    android:textColor="@drawable/choosebuttontext" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

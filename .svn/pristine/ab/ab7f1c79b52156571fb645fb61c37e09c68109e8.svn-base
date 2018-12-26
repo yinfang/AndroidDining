@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/choosebackground"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/main"
+            layout="@layout/header"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TableLayout
+                        android:id="@+id/tableLayout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="500dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/halfalpha"
+                        android:gravity="center_horizontal"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="15dp"
+                        android:stretchColumns="1">
+
+                        <TableRow
+                            android:id="@+id/tableRow1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/textView1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/menu_area"
+                                android:textColor="#505050"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="41dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/AreaName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:background="@null"
+                                    android:clickable="true"
+                                    android:gravity="center_vertical"
+                                    android:onClick="selectArea"
+                                    android:text="" />
+
+                                <View
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="1dp"
+                                    android:background="@color/underline" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/tableRow2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/msg_tableno"
+                                android:textColor="#505050"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="41dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/TableName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:clickable="true"
+                                    android:gravity="center_vertical"
+                                    android:onClick="selectTable"
+                                    android:text="@string/lbl_not_selected"
+                                    android:textColor="@color/plain_button"
+                                    android:textIsSelectable="false"
+                                    android:textSize="16sp" />
+
+                                <View
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="1dp"
+                                    android:background="@color/underline" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/msg_bill_code"
+                                android:textColor="#505050"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="41dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/bill_code"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:gravity="center_vertical"
+                                    android:onClick="selectBill"
+                                    android:textIsSelectable="false" />
+
+                                <View
+                                    android:id="@+id/line"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="1dp"
+                                    android:background="@color/underline" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/msg_card_no"
+                                android:textColor="#505050"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/qo_card_no"
+                                    android:layout_width="0dp"
+                                    android:layout_height="50dp"
+                                    android:layout_weight="0.5"
+                                    android:digits="@string/input_english_number"
+                                    android:singleLine="true"
+                                    android:textSize="16sp" />
+
+                                <Button
+                                    android:id="@+id/button1"
+                                    android:layout_width="50dp"
+                                    android:layout_height="40dip"
+                                    android:layout_marginLeft="5dp"
+                                    android:background="@drawable/choosebutton"
+                                    android:onClick="verifyConsumeCard"
+                                    android:text="@string/verify"
+                                    android:textColor="@drawable/choosebuttontext"
+                                    android:textSize="17sp" />
+
+                                <Button
+                                    android:id="@+id/button_gan_card"
+                                    android:layout_width="50dp"
+                                    android:layout_height="40dip"
+                                    android:layout_marginLeft="5dp"
+                                    android:background="@drawable/choosebutton"
+                                    android:onClick="ganCard"
+                                    android:text="@string/gancard"
+                                    android:textColor="@drawable/choosebuttontext"
+                                    android:textSize="17sp"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/row_identityName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/identity"
+                                android:textColor="@color/plain_button"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/identityName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/plain_button"
+                                android:textSize="16sp" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/msg_total_guest"
+                                android:textColor="#505050"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="41dp"
+                                android:orientation="vertical">
+
+                                <EditText
+                                    android:id="@+id/qo_total_guest"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:background="@null"
+                                    android:digits="0123456789"
+                                    android:inputType="number"
+                                    android:singleLine="true"
+                                    android:text="1"
+                                    android:textSize="16sp">
+
+                                    <requestFocus />
+                                </EditText>
+
+                                <View
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="1dp"
+                                    android:background="@color/underline" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/msg_guest_name"
+                                android:textColor="#505050"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/qo_guest_name"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="0dp"
+                                    android:layout_weight="0.5"
+                                    android:inputType="text"
+                                    android:singleLine="true"
+                                    android:textSize="16sp" />
+
+                                <Button
+                                    android:id="@+id/selectName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dip"
+                                    android:layout_marginLeft="5dp"
+                                    android:background="@drawable/choosebutton"
+                                    android:onClick="queryCheckin"
+                                    android:text="@string/msg_select"
+                                    android:textColor="@drawable/choosebuttontext"
+                                    android:textSize="17sp" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/msg_mem_no"
+                                android:textColor="#505050"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/qo_mem_no"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="0dp"
+                                    android:layout_weight="0.5"
+                                    android:inputType="text"
+                                    android:singleLine="true"
+                                    android:textSize="16sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp">
+
+                                    <Button
+                                        android:id="@+id/selectMem"
+                                        android:layout_width="50dp"
+                                        android:layout_height="40dip"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/choosebutton"
+                                        android:onClick="queryMemCheckin"
+                                        android:text="@string/msg_selectmem"
+                                        android:textColor="@drawable/choosebuttontext"
+                                        android:textSize="17sp" />
+
+                                    <Button
+                                        android:id="@+id/query_info"
+                                        android:layout_width="50dp"
+                                        android:layout_height="40dip"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/choosebutton"
+                                        android:onClick="queryMemCardInfo"
+                                        android:text="@string/msg_query_info"
+                                        android:textColor="@drawable/choosebuttontext"
+                                        android:textSize="17sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/lbl_ordersign"
+                                android:textColor="#505050"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="41dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/lbl_ordersign"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:singleLine="true" />
+
+                                <Button
+                                    android:id="@+id/remark"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dip"
+                                    android:layout_marginLeft="5dp"
+                                    android:background="@drawable/choosebutton"
+                                    android:onClick="remark"
+                                    android:text="@string/msg_select"
+                                    android:textColor="@drawable/choosebuttontext"
+                                    android:textSize="17sp" />
+                            </LinearLayout>
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:background="@drawable/longchoosebutton"
+                android:onClick="openOrder"
+                android:text="@string/menu_open_table"
+                android:textColor="@drawable/choosebuttontext"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/tip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:clickable="true"
+        android:onClick="closeImage"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="3dp"
+            android:contentDescription="@string/lbl_contentDesc"
+            android:src="@drawable/tip_quick_open_menu" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="100dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="148dp"
+            android:contentDescription="@string/lbl_contentDesc"
+            android:src="@drawable/tip_quick_open_share"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</FrameLayout>

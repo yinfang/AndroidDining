@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/choosebackground"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        layout="@layout/header" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp" >
+
+        <TextView
+            android:id="@+id/areaName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text=""
+            android:textColor="@color/my_orange"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/TableName"
+            style="@style/ClickableTextView"
+            android:layout_height="35dp"
+            android:background="@drawable/choosebutton"
+            android:gravity="center"
+            android:onClick="selectTable"
+            android:paddingRight="6dp"
+            android:text="@string/lbl_all"
+            android:textColor="@drawable/choosebuttontext" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dip"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/choosebutton"
+            android:onClick="delayed"
+            android:text="@string/btn_ok"
+            android:textColor="@drawable/choosebuttontext"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/list_divider"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/lvi"
+        android:scrollbars="none" />
+
+</LinearLayout>

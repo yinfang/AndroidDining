@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:stretchColumns="1" >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/msg_quantity"
+                android:textColor="@color/my_gray3"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/choosebutton"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="del"
+                    android:text="@string/del"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/quantity"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:digits="-.0123456789"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="@string/n1" />
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/choosebutton"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="add"
+                    android:text="@string/add"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row_cookingStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" >
+
+            <TextView
+                android:id="@+id/tt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:text="@string/lbl_practice"
+                android:textColor="@color/my_gray3"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/cooking_style"
+                style="@style/ClickableTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:onClick="selectStyle"
+                android:text="@string/lbl_not_selected" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/flavor_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/ttt4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/lbl_taste"
+                android:textColor="@color/my_gray3"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/cooking_flavor"
+                    style="@style/ClickableTextView"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="selectFlavor"
+                    android:text="@string/lbl_not_selected" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/choosebutton"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="selectma"
+                    android:text="@string/lbl_ma_query"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+           android:id="@+id/row_cooking_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+           android:visibility="gone"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/cooking_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/lbl_cookie_type"
+                android:textColor="@color/my_gray3"
+                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_cooking_type"
+                    style="@style/ClickableTextView"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:text="@string/lbl_not_selected" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/choosebutton"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="selectcookie"
+                    android:text="@string/lbl_cookie_query"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row_single_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/single_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/lbl_single_discount"
+                android:textColor="@color/my_gray3"
+                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal" >
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_single_discount"-->
+                    <!--style="@style/ClickableTextView"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:clickable="true"-->
+                    <!--android:text="@string/lbl_not_selected" />-->
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/tv_single_discount_click"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/choosebutton"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="singleDiscount"
+                    android:text="@string/lbl_single_discount_01"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/custom_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/custom_flavor"
+                android:textColor="@color/my_gray3"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/custom_flavor"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/change_name_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/menu_change_name"
+                android:textColor="@color/my_gray3"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/changedname"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/change_price_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/menu_change_price"
+                android:textColor="@color/my_gray3"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/changedprice"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:digits=".0123456789"
+                android:ems="10"
+                android:inputType="number" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

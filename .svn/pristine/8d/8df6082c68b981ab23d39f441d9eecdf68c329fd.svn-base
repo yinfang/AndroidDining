@@ -1,0 +1,247 @@
+package com.clubank.device;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.clubank.api.PosApi;
+import com.clubank.dining.R;
+import com.clubank.domain.BC;
+import com.clubank.domain.C;
+import com.clubank.domain.OnlinePayInfo;
+import com.clubank.domain.Result;
+import com.clubank.util.RxNetworking;
+import com.clubank.util.UI;
+import com.clubank.util.WaitingDialog;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.zxing.android.CaptureActivity;
+
+import java.util.Hashtable;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.functions.Action1;
+
+/**
+ * 支付宝、微信支付
+ */
+public class CheckoutPayOnlineActivity extends BaseActivity {
+    private OnlinePayInfo payInfo = new OnlinePayInfo();
+    private boolean blStop = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_checkout_pay_online);
+        hide(R.id.header_menu_scan);
+        Bundle bundle = getIntent().getExtras();
+        switch (payInfo.module) {
+            case 1:
+                setHeaderTitle(R.string.checkout_pay_alipay);
+                break;
+            case 2:
+                setHeaderTitle(R.string.checkout_pay_wechat);
+                break;
+            case 7:
+                setHeaderTitle(R.string.checkout_pay_yl);
+                break;
+        }
+        payInfo.totalPayable = bundle.getDouble("total");
+        payInfo.module = bundle.getInt("module");
+        setEText(R.id.tv_amount_total, new java.text.DecimalFormat("#.###").format(payInfo.totalPayable));
+        submitPayMode(1);
+    }
+
+    private void submitPayMode(int mode) {
+        payInfo.mode = mode;//(用户用手机扫 = 1,用户条码被扫 = 2（要提供authcode)
+        payInfo.serialNo = "";
+        payInfo.qrcode = "";
+        ImageView iv_qrcode = (ImageView) findViewById(R.id.iv_qrcode);
+        iv_qrcode.setImageResource(R.drawable.scan);
+        submitOnlinePay();
+    }
+
+    private void submitOnlinePay() {
+        Observable.Transformer<Result, Result> networkingIndicator
+                = RxNetworking.bindConnecting(new WaitingDialog(sContext));
+        String amount = String.valueOf(payInfo.totalPayable);
+        PosApi.getInstance(sContext)
+                .SubmitOnlinePay(String.valueOf(payInfo.module), String.valueOf(payInfo.mode), amount, payInfo.authCode)
+//                .compose(this.<Result>bindToLifecycle())
+                .compose(networkingIndicator)
+                .subscribe(new Action1<Result>() {
+                    @Override
+                    public void call(Result result) {
+                        if (result.code == BC.RESULT_SUCCESS) {
+                            payInfo.serialNo = result.data.get(0).getString("data");
+//                            LogHelper.d(payInfo.serialNo);
+                            if (TextUtils.isEmpty(payInfo.authCode)) {
+                                timerFunction(1);
+                            } else {
+                                timerFunction(2);
+                            }
+                        } else {
+                            UI.showToast(CheckoutPayOnlineActivity.this, result.msg);
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable e) {
+                        UI.showToast(CheckoutPayOnlineActivity.this, e.getMessage());
+                    }
+                });
+    }
+
+    private void getOnlinePayQRcode() {
+        PosApi.getInstance(sContext)
+                .GetOnlinePayQRcode(payInfo.serialNo)
+//                .compose(this.<Result>bindToLifecycle())
+                .subscribe(new Action1<Result>() {
+                    @Override
+                    public void call(Result result) {
+                        if (result.code == BC.RESULT_SUCCESS) {
+                            payInfo.qrcode = result.data.get(0).getString("data");
+//                            LogHelper.d(payInfo.qrcode);
+                            Bitmap bitmap = createQRCode(payInfo.qrcode, 500);
+                            ImageView iv_qrcode = (ImageView) findViewById(R.id.iv_qrcode);
+                            iv_qrcode.setImageBitmap(bitmap);
+                            timerFunction(2);
+                        } else {
+                            timerFunction(1);
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable e) {
+                        UI.showToast(CheckoutPayOnlineActivity.this, e.getMessage());
+                        timerFunction(1);
+                    }
+                });
+    }
+
+    /**
+     * 通过流水号取得支付结果
+     */
+    private void getOnlinePay() {
+        PosApi.getInstance(sContext)
+                .GetOnlinePay(payInfo.serialNo)
+//                .compose(this.<Result>bindToLifecycle())
+                .subscribe(new Action1<Result>() {
+                    @Override
+                    public void call(Result result) {
+                        if (result.code == BC.RESULT_SUCCESS) {
+                            UI.showToast(CheckoutPayOnlineActivity.this, R.string.checkout_pay_online_success);
+                            Intent intent = new Intent();
+                            intent.putExtra("payInfo", payInfo);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        } else {
+                            timerFunction(2);
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable e) {
+                        UI.showToast(sContext, e.getMessage());
+                        timerFunction(2);
+                    }
+                });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == C.REQUEST_SCAN) {
+            if (resultCode == RESULT_OK) {
+                String result = data.getStringExtra("RESULT");
+                UI.showToast(this, R.string.checkout_pay_scan_success);
+                hide(R.id.btn_scan);
+                payInfo.authCode = result;
+                submitPayMode(2);
+            } else if (resultCode == RESULT_CANCELED) {
+//                DialogHelper.showToast(this, R.string.scan_cancelled);
+            } else {
+//                DialogHelper.showToast(this, R.string.scan_abnormal);
+            }
+        }
+    }
+
+    /**
+     * 定时器模拟
+     *
+     * @param type
+     */
+    private void timerFunction(final int type) {
+        if (blStop) {
+            blStop = false;
+            return;
+        }
+        Observable.timer(1, TimeUnit.SECONDS)
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long result) {
+                        if (type == 1) {
+                            getOnlinePayQRcode();
+                        } else if (type == 2) {
+                            getOnlinePay();
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable e) {
+                    }
+                });
+    }
+
+    public void doWork(View v) {
+        switch (v.getId()) {
+            case R.id.btn_scan:
+                blStop = true;
+                Intent intent = new Intent(this, com.easier.code.util.CaptureActivity.class);
+                startActivityForResult(intent, C.REQUEST_SCAN);
+                break;
+        }
+    }
+
+    /**
+     * 生成二维码
+     *
+     * @param text 需要生成二维码的文字、网址等
+     * @param size 需要生成二维码的大小（）
+     * @return bitmap
+     */
+    public static Bitmap createQRCode(String text, int size) {
+        try {
+            Hashtable<EncodeHintType, String> hints = new Hashtable<>();
+            hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            BitMatrix bitMatrix = new QRCodeWriter().encode(text,
+                    BarcodeFormat.QR_CODE, size, size, hints);
+            int[] pixels = new int[size * size];
+            for (int y = 0; y < size; y++) {
+                for (int x = 0; x < size; x++) {
+                    if (bitMatrix.get(x, y)) {
+                        pixels[y * size + x] = 0xff000000;
+                    } else {
+                        pixels[y * size + x] = 0xffffffff;
+                    }
+
+                }
+            }
+            Bitmap bitmap = Bitmap.createBitmap(size, size,
+                    Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, size, 0, 0, size, size);
+            return bitmap;
+        } catch (WriterException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}

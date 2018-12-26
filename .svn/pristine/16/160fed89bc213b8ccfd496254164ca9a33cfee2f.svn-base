@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/choosebackground"
+    android:orientation="vertical"
+    tools:context="com.clubank.device.QueryBreakfastTicketActivity">
+
+    <include layout="@layout/header" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white_aa"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:stretchColumns="1">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="卡号"
+                    android:textColor="#505050"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_card_no_1"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="0.5"
+                        android:background="@null"
+                        android:digits="@string/input_english_number"
+                        android:hint="请输入卡号"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/btn_check_card_1"
+                        android:layout_width="50dp"
+                        android:layout_height="40dip"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/choosebutton"
+                        android:onClick="doWork"
+                        android:text="@string/verify"
+                        android:textColor="@drawable/choosebuttontext"
+                        android:textSize="17sp" />
+
+                    <Button
+                        android:id="@+id/btn_gan_card_1"
+                        android:layout_width="50dp"
+                        android:layout_height="40dip"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/choosebutton"
+                        android:onClick="doWork"
+                        android:text="@string/gancard"
+                        android:textColor="@drawable/choosebuttontext"
+                        android:textSize="17sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </TableRow>
+
+        </TableLayout>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:divider="@color/list_divider"
+            android:dividerHeight="5dp"
+            android:listSelector="@android:color/transparent">
+
+        </ListView>
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white_aa"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:stretchColumns="1"
+        android:visibility="gone">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:text="@string/msg_card_no"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edt_card_no"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.5"
+                    android:background="@null"
+                    android:digits="@string/input_english_number"
+                    android:hint="请输入消费卡号"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btn_check_card"
+                    android:layout_width="50dp"
+                    android:layout_height="40dip"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="doWork"
+                    android:text="@string/verify"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp" />
+
+                <Button
+                    android:id="@+id/btn_gan_card"
+                    android:layout_width="50dp"
+                    android:layout_height="40dip"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="doWork"
+                    android:text="@string/gancard"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:text="总券数"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/all_ticket"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:textIsSelectable="false" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/underline" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:text="已使用"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/used_ticket"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:textIsSelectable="false" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/underline" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:text="未使用"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/unUsed_ticket"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:textIsSelectable="false" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/underline" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:text="使用"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edt_use_num"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.5"
+                    android:background="@null"
+                    android:digits="@string/number"
+                    android:hint="请输入需要使用的个数"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btn_use"
+                    android:layout_width="50dp"
+                    android:layout_height="40dip"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="doWork"
+                    android:text="@string/use"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

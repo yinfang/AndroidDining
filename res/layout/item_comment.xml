@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:weightSum="5" >
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.76"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/my_orange" />
+
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/my_orange" />
+
+        <RadioGroup
+            android:id="@+id/commentGrop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/pleased"
+                style="@style/RadioButtonStyles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:onClick="itemPleased" />
+
+            <RadioButton
+                android:id="@+id/yawp"
+                style="@style/RadioButtonStyles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.5"
+                android:onClick="itemYawp" 
+                android:focusable="false"/>
+             <RadioButton
+                android:id="@+id/all"
+                style="@style/RadioButtonStyles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" 
+                android:focusable="false"/>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/commentSelect"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1.4"
+            android:background="@color/white"
+            android:ellipsize="end"
+            android:clickable="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="commentSelect"
+            android:singleLine="true"
+            android:text="@string/lbl_select"
+            />
+
+        <EditText
+            android:id="@+id/otherComment"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1.35"
+            android:background="@color/white"
+            android:ellipsize="middle"
+			android:singleLine="true"
+			android:inputType="text"
+            android:imeOptions="actionDone"
+            android:gravity="center_horizontal|center_vertical"
+            android:paddingLeft="5dp"
+            android:textSize="13sp"
+            android:clickable="true"
+        android:onClick="otherReason"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

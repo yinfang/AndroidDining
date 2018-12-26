@@ -1,0 +1,80 @@
+package com.clubank.devide;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.clubank.common.R;
+import com.clubank.domain.C;
+import com.clubank.util.MapUtil;
+
+@SuppressLint("Registered")
+public class MyMapActivity extends BaseActivity implements OnClickListener {
+
+	private MapView mMapView;
+	private RoutePlanSearch mSearch;
+	private LatLng pt1;
+	private LatLng pt2;
+
+	// private int nodeIndex = -1;// 节点索引,供浏览节点时使用
+	// private OverlayManager routeOverlay;
+
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Bundle b = getIntent().getExtras();
+		int layout = b.getInt(C.MAP_LAYOUT, R.layout.my_map);
+		setContentView(layout);
+
+		findViewById(R.id.search).setOnClickListener(this);
+
+		pt1 = new LatLng(b.getDouble("lat1"), b.getDouble("lon1"));
+		pt2 = new LatLng(b.getDouble("lat2"), b.getDouble("lon2"));
+
+		mMapView = (MapView) findViewById(R.id.bmapView);
+		BaiduMap baiduMap = mMapView.getMap();
+
+		MapUtil.zoomTo(baiduMap, 14.0f);
+		MapUtil.center(baiduMap, pt2);
+		MapUtil.drawPoint(baiduMap, pt2);
+
+		mSearch = RoutePlanSearch.newInstance();
+		MapUtil.initSearch(this, baiduMap, mSearch);
+
+	}
+
+	public void onClick(View view) {
+		if (view.getId() == R.id.search) {
+			PlanNode stNode = PlanNode.withLocation(pt1);
+			PlanNode enNode = PlanNode.withLocation(pt2);
+			mSearch.drivingSearch((new DrivingRoutePlanOption()).from(stNode)
+					.to(enNode));
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		mMapView.onPause();
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		mMapView.onResume();
+		super.onResume();
+	}
+
+	@Override
+	protected void onDestroy() {
+		mMapView.onDestroy();
+		super.onDestroy();
+		// bdA.recycle();
+	}
+
+}

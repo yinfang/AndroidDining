@@ -1,0 +1,445 @@
+package com.clubank.device;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.clubank.dining.R;
+import com.clubank.domain.BC;
+import com.clubank.domain.Bill;
+import com.clubank.domain.Result;
+import com.clubank.domain.S;
+import com.clubank.op.AddBillLock;
+import com.clubank.op.ChangeBillStatus;
+import com.clubank.op.ChangeTable;
+import com.clubank.op.GetBillByCode;
+import com.clubank.op.GetBillLock;
+import com.clubank.op.GetPendingBil;
+import com.clubank.util.IconContextMenu;
+import com.clubank.util.IconContextMenuOnClickListener;
+import com.clubank.util.MyAsyncTask;
+import com.clubank.util.MyData;
+import com.clubank.util.MyRow;
+import com.clubank.util.UI;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
+/**
+ * @author jishu0416 消费记账——账单一览
+ */
+public class ChargeListActivity extends BasebizActivity implements OnItemClickListener,
+        OnItemLongClickListener {
+    private String areaCode;
+    private String date;
+    private BillAdapter sa;
+    private int QUERY_BILL;
+    private String tableNo;
+    private String cardNo;
+    private String diningRemarks;
+    private int pos;
+    private int CONTEXT_MENU_ID = 1;
+    private int MENU_CHANGE_BILL = 2;
+    private int MENU_CHANGE_TABLE = 5;
+    private int MENU_DELETE_BILL = 10;
+    private int GOTO_CHANGE = 4;
+    private int REQUEST_CHANGE_TABLE = 7;
+    private int from; // 0为消费记账 2为点击桌台
+    private MyData pending;
+    private MyData tables;
+    private String billCode;
+    private boolean isPay = false;
+    private double TotalPayable;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.charge_list);
+        Bundle b = getIntent().getExtras();
+        sa = new BillAdapter(this, R.layout.lvi_billtocharge, new MyData());
+        ListView listView = (ListView) findViewById(R.id.lvw_charge_list);
+        listView.setAdapter(sa);
+        listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
+        areaCode = b.getString("areaCode");
+        date = b.getString("date");
+        tableNo = b.getString("code");
+        if (tableNo != null && !tableNo.equals("")) {
+            from = 2;
+        } else {
+            from = 0;
+        }
+        findViewById(R.id.header_menu).setVisibility(View.VISIBLE);
+        menus = new String[]{"menu_refresh", "menu_new_bill", "menu_query_bill"};
+        setEText(R.id.condition, b.getString("condition"));
+        // loadTable();
+    }
+
+    private void loadTable() {
+        String sql = "select Code,Name,areaCode from T_Diningtable where areacode=?";
+        tables = db.getData(sql, new String[]{areaCode});
+        /*
+         * tableNames = new String[tables.size() + 1]; tableNames[0] =
+		 * getString(R.string.lbl_not_selected); for (int i = 0; i <
+		 * tables.size(); i++) { tableNames[i + 1] = (String)
+		 * tables.get(i).get("Name"); }
+		 */
+    }
+
+    @Override
+    public void menuSelected(View view, int index) {
+        if (index == 0) {// refresh
+            refreshData();
+        } else if (index == 1) {
+            Intent i = new Intent(this, QuickOpenActivity.class);
+            i.putExtra("tableNo", tableNo);
+            i.putExtra("title", R.string.menu_QuickOpen);
+            startActivity(i);
+            // openIntent(QuickOpenActivity.class, R.string.menu_QuickOpen);
+        } else if (index == 2) {
+            Intent intent = new Intent(this, ChargeQueryBill.class);
+            intent.putExtra("areaCode", areaCode);
+            startActivityForResult(intent, QUERY_BILL);
+        }
+
+    }
+
+    public void refreshData() {
+        new MyAsyncTask(this, GetPendingBil.class).execute(S.shopCode, areaCode, date, tableNo,
+                cardNo, diningRemarks,
+                false);
+    }
+
+    @Override
+    public void onResume() {
+        refreshData();
+        super.onResume();
+        findViewById(R.id.menu).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onPostExecute(Class<?> op, Result result) {
+        super.onPostExecute(op, result);
+        /*
+         * if (result.code == RT.SERVER_ERROR) { UI.showError(this, op.getName()
+		 * + result.obj); }
+		 */
+        if (op == GetPendingBil.class) {
+            if (result.code == BC.RESULT_SUCCESS) {
+                pending = (MyData) result.obj;
+                TextView billcount = (TextView) findViewById(R.id.bill_count);
+                billcount.setText(pending.size() + "");
+                fillListView(pending);
+            }
+        } else if (op == GetBillByCode.class) {
+            if (result.code == BC.RESULT_SUCCESS) {
+                MyRow row = (MyRow) result.obj;
+                MyData items = (MyData) row.get("BillItems");
+                if (items != null && items.size() > 0) {
+                    BU.fillBillItems(items);
+                }
+                BU.fillBill(row);
+
+                S.orderMode = true;
+                S.modified = false;
+                if (TextUtils.isEmpty(S.userCode)) {
+                    UI.showError(this, getResources().getString(R.string.error_login), 1526, null);
+                } else {
+                    new MyAsyncTask(this, AddBillLock.class).execute(S.token, billCode, S
+                            .userCode, "移动餐饮锁定！", getIp());
+                }
+
+            }
+        } else if (op == ChangeTable.class) {
+            if (result.code == BC.RESULT_SUCCESS) {
+                UI.showInfo(this, R.string.msg_operation_success, 33);
+            }
+        } else if (op == GetBillLock.class) {
+            if (result.code == BC.RESULT_SUCCESS) {
+                if (isPay) {//结账
+                    Intent it = new Intent(this, CheckoutPaymentActivity.class);
+                    it.putExtra("code", tableNo);
+                    it.putExtra("title", getString(R.string.checkout_consumption_checkout));
+                    it.putExtra("billcode", billCode);
+                    it.putExtra("prices", TotalPayable);
+                    startActivity(it);
+                    finish();
+                } else {
+                    new MyAsyncTask(this, GetBillByCode.class).execute(billCode);
+                }
+            } else if (result.code == BC.LOGIN_OUT_TIME) {
+                if (BC.type != 2) {// 吉云轩版本不提示登陆过期 2016.10.10
+                    UI.showError(this, getResources().getString(R.string.relogin), 3007, "");
+                }
+            } else {
+                if (isPay) {//结账
+                    UI.showInfo(this, "账单已锁定，不能结账");
+                } else {
+                    UI.showInfo(this, result.obj.toString());
+                }
+            }
+        } else if (op == AddBillLock.class) {
+            if (result.code == BC.RESULT_SUCCESS) {
+                Intent intent = new Intent(this, OrderOrderedActivity.class);
+                intent.putExtra("from", "charge");
+                startActivity(intent);
+            } else if (result.code == BC.LOGIN_OUT_TIME) {
+                if (BC.type != 2) {// 吉云轩版本不提示登陆过期 2016.10.10
+                    UI.showError(this, getResources().getString(R.string.relogin), 3007, "");
+                }
+            }
+        } else if (op == ChangeBillStatus.class) {
+            if (result.code == BC.RESULT_SUCCESS) {//删除成功
+                Object o = result.obj;
+                UI.showToast(this, "删除成功");
+                refreshData();
+
+            } else {
+                UI.showInfo(this, "删除失败");
+            }
+        }
+    }
+
+    @Override
+    public void processDialogOK(int type, Object tag) {
+        super.processDialogOK(type, tag);
+        if (type == 33) {
+            refreshData();
+        } else if (type == 3007 || type == 1526) {// 用户信息异常，重新登录
+            biz.openLoginActivity();
+        }
+    }
+
+    /**
+     * 填充数据
+     *
+     * @param pending
+     */
+    private void fillListView(MyData pending) {
+        if (pending == null || pending.size() == 0) {
+            sa.clear();
+            sa.notifyDataSetChanged();
+            return;
+        }
+
+        if (pending.size() > 0) {
+            sa.clear();
+            for (MyRow row : pending) {
+                sa.add(row);
+            }
+            sa.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * item点击 跳转到下单界面
+     */
+    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+        MyRow row = (MyRow) arg0.getItemAtPosition(arg2);
+        S.bill = new Bill();
+        billCode = row.getString("BillCode");
+        isPay = false;
+        getBillLock();
+
+    }
+
+    /**
+     * 获取锁状态
+     */
+    public void getBillLock() {
+        new MyAsyncTask(this, GetBillLock.class).execute(S.token, billCode);
+    }
+
+    /**
+     * listview 长点击 对话框选择 ：转台 修改账单信息
+     */
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
+        this.pos = pos;
+        Dialog d = createDialog(CONTEXT_MENU_ID, pos);
+        if (d != null) {
+            d.show();
+            return true;
+        }
+        return false;
+
+    }
+
+    private Dialog createDialog(int id, Object tag) {
+
+        final MyRow row = sa.getItem(pos);
+        if (id == CONTEXT_MENU_ID) {
+            IconContextMenu m = new IconContextMenu(this, tag);
+            m.add(R.string.lbl_changeRemark, R.drawable.m_charge_bill, MENU_CHANGE_BILL);
+            m.add(R.string.menu_change_table, R.drawable.menu_change_table, MENU_CHANGE_TABLE);
+            //
+
+            BitmapFactory.Options op = new BitmapFactory.Options();
+
+            Bitmap drawable = BitmapFactory.decodeResource(getResources(), R.drawable
+                    .menu_delete_bill, op);
+            BitmapDrawable f = new BitmapDrawable(getResources(), drawable);
+
+            m.add(R.string.menu_delete_bill, R.drawable.menu_delete_bill, MENU_DELETE_BILL);
+            m.setOnClickListener(new IconContextMenuOnClickListener() {
+                @Override
+                public void onClick(int menuId) {
+                    if (menuId == MENU_CHANGE_BILL) {
+                        Intent i = new Intent(ChargeListActivity.this, ChangeBillInfo.class);
+
+                        Bundle b = new Bundle();
+                        b.putSerializable("info", pending.get(pos));
+                        i.putExtras(b);
+                        // i.putExtra("info", sa.getItem(pos));
+
+                        startActivityForResult(i, GOTO_CHANGE);
+                    } else if (menuId == MENU_CHANGE_TABLE) {
+                        Intent intent = new Intent(ChargeListActivity.this, ChangeTableActivity
+                                .class);
+
+                        intent.putExtra("oldCode", row.getString("TableNo"));
+                        intent.putExtra("oldName", row.getString("TableName"));
+                        intent.putExtra("title", getText(R.string.menu_change_table));
+                        intent.putExtra("billName", row.getString("BillCode"));
+                        intent.putExtra("guestName", row.getString("GuestName"));
+                        startActivityForResult(intent, REQUEST_CHANGE_TABLE);
+                    } else if (menuId == MENU_DELETE_BILL) {
+//                        for (int i = 0; i < row.size(); i++) {
+//                            String key = row.keyAt(i);
+//                            String s = row.getString(key);
+//                            Log.d("delete", key + " : " + s);
+//                        }
+                        new MyAsyncTask(ChargeListActivity.this, ChangeBillStatus.class).execute
+                                (S.token, row.getString("BillCode"));
+                    }
+                }
+            });
+            return m.createMenu(row.getString("TableName") + "(" + row.getString("BillCode") + ")");
+        }
+        return null;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == QUERY_BILL && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            tableNo = bundle.getString("TableNo");
+            cardNo = bundle.getString("CardNo");
+            diningRemarks = bundle.getString("DiningRemarks");
+        } else if (requestCode == GOTO_CHANGE) {
+            refreshData();
+        } else if (requestCode == REQUEST_CHANGE_TABLE && resultCode == RESULT_OK) {
+            String newTableNo = data.getExtras().getString("newTableNo");
+            String billName = data.getExtras().getString("billName");
+			/*
+			 * for (int i = 0; i < tables.size(); i++) { if
+			 * (tables.get(i).getString("Code").equals(newTableNo)) {
+			 * tablePosition = i; setEText(R.id.TableName,
+			 * tables.get(i).getString("Name")); break; } } String billCode =
+			 * tablePending.get(pendingIndex).getString( "BillCode");
+			 */
+            new MyAsyncTask(this, ChangeTable.class).execute(billName, newTableNo);
+        }
+    }
+
+    public String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en
+                    .hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr
+                        .hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()) {
+                        return inetAddress.getHostAddress().toString();
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            Log.e("Wifi  IpAddress", ex.toString());
+        }
+        return null;
+    }
+
+    private String getIp() {
+        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(Context
+                .WIFI_SERVICE);
+        // 检查Wifi状态
+        if (!wm.isWifiEnabled())
+            wm.setWifiEnabled(true);
+        WifiInfo wi = wm.getConnectionInfo();
+        // 获取32位整型IP地址
+        int ipAdd = wi.getIpAddress();
+        // 把整型地址转换成“*.*.*.*”地址
+        String ip = intToIp(ipAdd);
+        return ip;
+    }
+
+    private String intToIp(int i) {
+        return (i & 0xFF) + "." + ((i >> 8) & 0xFF) + "." + ((i >> 16) & 0xFF) + "." + (i >> 24 &
+                0xFF);
+    }
+
+    @Override
+    public void back() {
+        if (getIntent().getStringExtra("from").equals("quickOpen")) {
+            //
+            Intent it = new Intent(this, TableActivity.class);
+            it.putExtra("from", "quickOpen");
+            it.putExtra("title", R.string.menu_Table);
+            startActivity(it);
+            finish();
+        }
+        super.back();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (getIntent().getStringExtra("from").equals("quickOpen")) {
+                //
+                Intent it = new Intent(this, TableActivity.class);
+                it.putExtra("from", "quickOpen");
+                it.putExtra("title", R.string.menu_Table);
+                startActivity(it);
+                finish();
+            }
+            super.back();
+
+        }
+
+        return false;
+
+    }
+
+    /**
+     * 结账 判定账单是否锁定
+     */
+    public void PayBill(View view) {
+        int pos = (int) view.getTag();
+        MyRow row = pending.get(pos);
+        billCode = row.getString("BillCode");
+        TotalPayable = row.getDouble("TotalPayable");
+        isPay = true;
+        getBillLock();
+    }
+
+}

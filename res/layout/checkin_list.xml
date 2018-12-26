@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        layout="@layout/header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:gravity="center_horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+         >
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:hint="@string/msg_guest_name"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textSize="16sp" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/memno"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:hint="@string/msg_mem_no"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textSize="16sp"  />
+
+        <Button
+            android:id="@+id/selectName"
+            android:layout_width="50dip"
+            android:layout_height="40dip"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/button"
+            android:onClick="queryCheckin"
+            android:text="@string/lbl_query"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/checkin_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/list_divider"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/lvi" />
+
+</LinearLayout>

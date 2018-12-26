@@ -1,0 +1,283 @@
+package com.clubank.device;
+
+import android.app.Dialog;
+import android.os.Build;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.clubank.dining.R;
+import com.clubank.domain.BC;
+import com.clubank.domain.C;
+import com.clubank.domain.RT;
+import com.clubank.domain.Result;
+import com.clubank.domain.S;
+import com.clubank.op.GetSysVersion;
+import com.clubank.op.IsHoliday;
+import com.clubank.op.Login;
+import com.clubank.util.CustomDialogView;
+import com.clubank.util.CustomDialogView.Initializer;
+import com.clubank.util.CustomDialogView.OKProcessor;
+import com.clubank.util.MyAsyncTask;
+import com.clubank.util.U;
+import com.clubank.util.UI;
+
+import java.util.Date;
+
+public class LoginActivity extends BaseActivity {
+
+    private static final int DLG_SERVER_URL = 1;
+    private static final int CLUB_ID_SETTING = 2;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login);
+        BC.engineerMode = false;
+
+        final EditText editText = (EditText) findViewById(R.id.password);
+        editText.setImeActionLabel(getText(R.string.lbl_login),
+                KeyEvent.KEYCODE_ENTER);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    login(editText);
+                    return true;
+                }
+                return false;
+            }
+        });
+        menus = new String[]{(String) getText(R.string.menu_demo_mode),
+                (String) getText(R.string.menu_setting),
+                (String) getText(R.string.clubid_setting),
+                (String) getText(R.string.menu_about)};
+        menuImages = new int[]{R.drawable.menu_demo_mode,
+                R.drawable.menu_setting, R.drawable.edit_big, R.drawable.menu_about};
+    }
+
+    @Override
+    public void onStart() {
+        String userCode = settings.getString("userCode", "");
+        String password = settings.getString("password", "");
+
+        boolean rememberPassword = settings
+                .getBoolean("rememberPassword", true);
+        if (!"".equals(userCode)) {
+            setEText(R.id.userCode, userCode);
+        }
+        ((CheckBox) findViewById(R.id.rememberPassword))
+                .setChecked(rememberPassword);
+        if (rememberPassword) {
+            setEText(R.id.password, password);
+        }
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String wsUrl = settings.getString("wsUrl", "");
+        if (wsUrl != null && !wsUrl.equals("")) {
+            setEText(R.id.wsUrl, wsUrl);
+        }
+    }
+
+    public void login(View view) {
+        String clubid = settings.getString("CLUB_ID", "");
+        if (clubid.isEmpty()) {
+            UI.showInfo(sContext, R.string.lbl_club_id);
+            return;
+        }
+        String userCode = getEText(R.id.userCode);
+        String password = getEText(R.id.password);
+        if ("".equals(userCode) || "".equals(password)) {
+            Toast.makeText(this, R.string.login_info_null, Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+        String imei = U.getUdid(this);
+        String machineName = Build.MODEL + "(" + Build.VERSION.RELEASE + ")";
+        new MyAsyncTask(this, Login.class).execute(userCode, password, imei,
+                machineName, "1.0");
+    }
+
+    @Override
+    public void onPostExecute(Class<?> op, Result result) {
+        if (op == Login.class) {
+            if (result.code == BC.RESULT_SUCCESS) {
+                biz.loginSuccess(result);
+                String password = getEText(R.id.password);
+                saveSetting("userCode", S.userCode);
+                boolean rememberPassword = ((CheckBox) findViewById(R.id.rememberPassword))
+                        .isChecked();
+                saveSetting("rememberPassword", rememberPassword);
+                if (rememberPassword) {
+                    saveSetting("password", password);
+                } else {
+                    removeSetting("password");
+                }
+                new MyAsyncTask(this, GetSysVersion.class).run();
+            } else if (result.code == BC.RESULT_OVER_POINTS) {
+                UI.showError(this, R.string.msg_over_points);
+            } else if (result.code == BC.RESULT_INVALID_USERNAME_PASSWORD) {
+                UI.showError(this, R.string.msg_login_failed);
+            } else if (result.code == BC.RESULT_PASSWORD_EXPIRED) {
+                UI.showError(this, R.string.msg_password_expired);
+            } else if (result.code == BC.RESULT_USER_DISABLED) {
+                UI.showError(this, R.string.msg_user_disabled);
+            }
+        } else if (op == GetSysVersion.class) {
+            super.onPostExecute(op, result);
+            if (result.code == RT.SUCCESS) {
+                BC.conversionCode = (String) result.obj;
+                // Intent intent = new Intent();
+                String dateTime = C.df_yMd.format(new Date());
+                new MyAsyncTask(this, IsHoliday.class).run(dateTime);
+            }
+        } else if (op == IsHoliday.class) {
+            if (result.code == RT.SUCCESS) {
+                int isHoliday = (int) result.obj;
+                BC.IsHoliday = isHoliday == 1;//１是假日0是平日
+                biz.goMain();
+                setResult(RESULT_OK);
+                finish();
+            }
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            logout();
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+
+    @Override
+    public void menuSelected(View view, int index) {
+        if (index == 0) {// 演示模式
+            BC.engineerMode = true;
+            S.userCode = "001";
+            S.userName = "李玉娇";
+            S.shopCode = "CT";
+            S.bill.BillShop = S.shopCode;
+            S.shopName = "鹰巢餐厅";
+            S.token = "Token";
+            biz.goMain();
+            setResult(RESULT_OK, null);
+            finish();
+        } else if (index == 1) {// 服务端地址设置
+            showCustomDialog(DLG_SERVER_URL, getString(R.string.lbl_enter_url),
+                    R.layout.server_url_item, -1);
+        } else if (index == 2) {// clubid设置
+            showCustomDialog(CLUB_ID_SETTING, getString(R.string.lbl_club_id),
+                    R.layout.server_url_item, -1);
+        } else if (index == 3) {// 关于
+            showAbout();
+        }
+    }
+
+    /**
+     * 登陆界面设置按钮点击事件
+     *
+     * @param view
+     */
+    public void showMenu(final View view) {
+        showMenu(view, 2, 2, menus, menuImages);
+    }
+
+    /**
+     * 自定义对话框
+     *
+     * @param type    用于区分哪个功能的对话框
+     * @param title   标题
+     * @param layout  内容布局文件
+     * @param resIcon 标题前图标（左），默认为Alert
+     */
+    public void showCustomDialog(final int type, CharSequence title,
+                                 int layout, int resIcon) {
+
+        CustomDialogView cd = new CustomDialogView(this);
+        cd.setInitializer(new Initializer() {
+            public void init(View view) {
+                initDialog(type, view);
+            }
+        });
+        cd.setOKProcessor(new OKProcessor() {
+            public boolean process(Dialog ad) {
+                return finishDialog(type, ad);
+            }
+        });
+        cd.show(title, layout, resIcon);
+
+    }
+
+    public void about(View view) {
+        showAbout();
+    }
+
+    private void showAbout() {
+        openIntent(AboutActivity.class, UI.getText(this, "title_about"));
+    }
+
+    public void cancel(View view) {
+
+    }
+
+    public void toggleViewPassword(View view) {
+        CheckBox c = (CheckBox) view;
+        TextView v = (TextView) findViewById(R.id.password);
+        if (c.isChecked()) {
+            v.setTransformationMethod(null);
+        } else {
+            v.setTransformationMethod(new PasswordTransformationMethod());
+        }
+
+    }
+
+    protected void initDialog(int type, View view) {
+        if (type == DLG_SERVER_URL) {
+            EditText url = (EditText) view.findViewById(R.id.input);
+            String wsUrl = settings.getString("wsUrl", C.wsUrl);
+            if (wsUrl != null && !wsUrl.equals("")) {
+                url.setText(wsUrl);
+            }
+        } else if (type == CLUB_ID_SETTING) {
+            EditText url = (EditText) view.findViewById(R.id.input);
+            String clubid = settings.getString("CLUB_ID", BC.CLUB_ID);
+            if (!TextUtils.isEmpty(clubid)) {
+                url.setText(clubid);
+            }
+        }
+    }
+
+    protected boolean finishDialog(int type, Dialog dialog) {
+        if (type == DLG_SERVER_URL) {
+            EditText url = (EditText) dialog.findViewById(R.id.input);
+            String wsUrl = url.getText().toString();
+            C.wsUrl = wsUrl;
+            setEText(R.id.wsUrl, wsUrl);
+            removeSetting("wsUrl");
+            saveSetting("wsUrl", wsUrl);
+        } else if (type == CLUB_ID_SETTING) {
+            EditText url = (EditText) dialog.findViewById(R.id.input);
+            String clubid = url.getText().toString();
+            BC.CLUB_ID = clubid;
+            removeSetting("CLUB_ID");
+            saveSetting("CLUB_ID", clubid);
+        }
+        return true;
+    }
+
+}

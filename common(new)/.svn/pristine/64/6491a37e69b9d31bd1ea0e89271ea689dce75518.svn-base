@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ViewPagerIndicator">
+        <attr name="TabPageIndicatorStyle" format="reference" />
+        <attr name="UnderlinePageIndicator" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="UnderlinePageIndicator">
+        <attr name="fades" format="boolean" />
+        <attr name="fadeDelay" format="integer" />
+        <attr name="fadeLength" format="integer" />
+        <attr name="selectedColor" format="color" />
+    </declare-styleable>
+    <!--圆图边缘设置-->
+    <declare-styleable name="RoundImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+</resources>

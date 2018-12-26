@@ -1,0 +1,377 @@
+package com.clubank.device.op;
+
+import android.content.Context;
+
+import android.content.SharedPreferences;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.clubank.domain.C;
+import com.clubank.domain.MarshalDouble;
+import com.clubank.domain.Result;
+import com.clubank.util.FileUtil;
+import com.clubank.util.JsonUtil;
+import com.clubank.util.MyData;
+import com.clubank.util.MyRow;
+import com.clubank.util.U;
+import com.google.gson.Gson;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.SoapFault;
+import org.ksoap2.serialization.MarshalBase64;
+import org.ksoap2.serialization.PropertyInfo;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
+import org.kxml2.kdom.Element;
+import org.kxml2.kdom.Node;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class OPBase {
+
+	private Context context;
+
+	private String namespace;
+	private SharedPreferences sp;
+	public static String SessionID = "";
+	public HttpClient client;
+
+	public OPBase(Context context) {
+		this.context = context;
+		sp = context.getSharedPreferences(C.APP_ID, Context.MODE_PRIVATE);
+		namespace = sp.getString("namespace", "http://www.hclub.com/");
+	}
+
+    protected Object operate(String methodName, MyRow args) throws Exception {
+        String rootPath = context.getFilesDir().getAbsolutePath() + "/" + "DiningDebug/";
+		Object ret = 0;
+		String soapAction = namespace + methodName;
+		SoapObject request = new SoapObject(namespace, methodName);
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+
+		for (String key : args.keySet()) {
+			Object o = args.get(key);
+			request.addProperty(key, o);
+		}
+		envelope.implicitTypes = true;// output xml tag without type declared
+		envelope.dotNet = true;
+
+		envelope.headerOut = new Element[1];
+		envelope.headerOut[0] = buildAuthHeader();
+
+		new MarshalBase64().register(envelope);
+		new MarshalDouble().register(envelope);
+
+		// envelope.bodyOut = request;
+		envelope.setOutputSoapObject(request);
+
+		if (C.wsUrl == null) {
+			C.wsUrl = sp.getString("wsUrl", null);
+		}
+
+		HttpTransportSE ht = new HttpTransportSE(C.wsUrl, C.TIMEOUT);
+
+        ht.debug = true;
+        try {
+            ht.call(soapAction, envelope);
+            String requestXml = ht.requestDump;
+//            if (U.isDebug(context)) {
+                Log.d("Request", methodName + ":" + requestXml);
+//            }
+            if (envelope.getResponse() != null) {
+                String responseXml = ht.responseDump;
+                FileUtil.writeTxtToFile(responseXml,rootPath,methodName);
+//                if (U.isDebug(context)) {
+                    Log.d("Response", methodName + ":" + responseXml);
+//                }
+                ret = envelope.getResponse();
+            }
+        } catch (SoapFault e) {
+            FileUtil.writeTxtToFile(e.getMessage(),rootPath,methodName);
+            throw e;
+        }
+
+		return ret;
+	}
+
+	/**
+	 * @param requestModel GET or POST
+	 * @param methodName
+	 * @return
+	 * @throws Exception
+	 * @throws Exception
+	 */
+	protected Result operateHttp(int requestModel, String methodName, Object ob)
+			throws Exception {
+		Result r = new Result();
+		HttpUriRequest request = null;
+		String result = "";
+		if (requestModel == C.HTTP_GET) {
+			request = initGet(C.baseUrl + methodName, (MyRow) ob);
+
+		} else if (requestModel == C.HTTP_POST) {
+//			// 对象转换成json
+//			String rowStr = new Gson().toJson(ob);
+//			// 将JSON进行UTF-8编码,以便传输中文
+//			String encoderJson = URLEncoder.encode(rowStr, HTTP.UTF_8);
+//			request = initPost(C.baseUrl + methodName, new StringEntity(encoderJson,
+//					HTTP.UTF_8));
+
+			MyRow row = (MyRow) ob;
+			List<NameValuePair> params = new ArrayList<>();
+			Set<String> keys = row.keySet();
+			for (String key : keys) {
+				Object o = row.get(key);
+				params.add(new BasicNameValuePair(key, o.toString()));
+			}
+			request = initPost(C.baseUrl + methodName, params);
+			if (U.isDebug(context)) {
+				StringBuffer buff = new StringBuffer();
+				for (int i = 0; i < params.size(); i++) {
+					buff.append(params.get(i).getName() + ":" + params.get(i).getValue() + "\f");
+				}
+				Log.d("Request", C.baseUrl + methodName + ":" + buff.toString());
+			}
+		}
+
+		if (null != C.headerData) {//自定义头文件
+			Set<String> set = C.headerData.keySet();
+			for (String s : set) {
+				request.setHeader(s, C.headerData.get(s).toString());
+			}
+
+		} else {
+			// 设置请求头
+			request.setHeader("Accept", "application/json");
+			request.setHeader("Content-type", "application/x-www-form-urlencoded");
+			request.setHeader("Token", sp.getString("Token", ""));
+			if (C.location != null) {
+				// +0.0065 0.0060 google location convert to BAIDU location
+				request.setHeader("longitude", C.location.getLongitude() + 0.0065 + "");
+				request.setHeader("latitude", C.location.getLatitude() + 0.0060 + "");
+			}
+			request.setHeader("usreName", sp.getString("userName", ""));
+			request.setHeader("memberId", sp.getString("memberId", ""));
+
+		}
+		if (U.isDebug(context)) {
+			StringBuffer buf = new StringBuffer();
+			for (int i = 0; i < request.getAllHeaders().length; i++) {
+				buf.append(request.getAllHeaders()[i].getName() + ":" + request.getAllHeaders()[i]
+						.getValue() + "\n");
+			}
+			Log.d("Headers", methodName + buf.toString());
+		}
+		try {
+			HttpResponse response = initHttp().execute(request);
+			HttpEntity entity = response.getEntity();
+			result = EntityUtils.toString(entity, HTTP.UTF_8);
+			if (U.isDebug(context)) {
+				Log.d("Response", C.baseUrl + methodName + ":" + result);
+			}
+			// 成功码200
+			if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
+//				HttpEntity entity = response.getEntity();
+//				result = EntityUtils.toString(entity, HTTP.UTF_8);
+//				if (U.isDebug(context)) {
+//					Log.d("Response", C.baseUrl + methodName + ":" + result);
+//				}
+				if (!TextUtils.isEmpty(result)) {
+					MyRow row = JsonUtil.getRow(result);
+					if (!TextUtils.isEmpty(C.apiDataKey) && row.containsKey(C.apiDataKey)) {
+						r.obj = row.get(C.apiDataKey);
+					} else {
+						r.obj = row;
+					}
+					r.code = row.getInt(C.apiState);
+					r.msg = row.getString(C.apiMsg);
+				}
+			} else {
+				Log.d(methodName, "StatusCode："
+						+ response.getStatusLine().getStatusCode());
+				r.code = response.getStatusLine().getStatusCode();
+			}
+		} catch (IOException e) {
+			Log.d(methodName, "Exception：" + e.getMessage());
+			throw e;
+		} finally {
+			// 当不再需要client实例时,关闭连接管理器以确保释放所有占用的系统资源
+			client.getConnectionManager().shutdown();
+		}
+		return r;
+	}
+
+	/**
+	 * 为了低耦合,get和post分开
+	 *
+	 * @param url
+	 * @throws UnsupportedEncodingException
+	 */
+	private HttpGet initGet(String url, MyRow row)
+			throws UnsupportedEncodingException {
+		HttpGet get = new HttpGet(appendUrl(url, row));
+
+		/*get.setHeader();*/
+		return get;
+	}
+
+	private HttpPost initPost(String url, StringEntity entity) {
+		HttpPost post = new HttpPost(url);
+
+		post.setEntity(entity);
+
+		return post;
+	}
+
+	private HttpPost initPost(String url, List<NameValuePair> params) {
+		HttpPost post = new HttpPost(url);
+		try {
+			post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		return post;
+	}
+
+	private HttpClient initHttp() {
+		client = new DefaultHttpClient();
+		// 最长响应时间
+		client.getParams().setIntParameter(HttpConnectionParams.SO_TIMEOUT,
+				C.TIMEOUT); // 超时设置
+		client.getParams().setIntParameter(
+				HttpConnectionParams.CONNECTION_TIMEOUT, C.TIMEOUT);// 连接超时
+		return client;
+	}
+
+	/**
+	 * 如果是GET请求，则请求参数在URL中拼
+	 *
+	 * @param url 带方法名的url
+	 * @param row url中拼接的参数
+	 * @return 请求的get url
+	 * @throws UnsupportedEncodingException
+	 */
+	private String appendUrl(String url, MyRow row)
+			throws UnsupportedEncodingException {
+		StringBuilder buf = new StringBuilder(url);
+		Set<Map.Entry<String, Object>> entrys = null;
+		if (row != null && !row.isEmpty()) {
+			buf.append("?");
+			entrys = row.entrySet();
+			for (Map.Entry<String, Object> entry : entrys) {
+				buf.append(entry.getKey()).append("=")
+						.append(URLEncoder.encode(entry.getValue() + "", "UTF-8"))
+						.append("&");
+			}
+			buf.deleteCharAt(buf.length() - 1);
+		}
+
+		Log.d("Request", buf.toString());
+		return buf.toString();
+	}
+
+
+	private Element buildAuthHeader() {
+		Element h = new Element().createElement(namespace,
+				"AuthenticationSoapHeader");
+		SharedPreferences sp = context.getSharedPreferences(C.APP_ID,
+				Context.MODE_PRIVATE);
+		if (null != C.headerData) {//自定义头文件
+
+			Set<String> set = C.headerData.keySet();
+			for (String s : set) {
+				addElement(h, s, C.headerData.get(s).toString());
+			}
+		} else {
+			String token = sp.getString("token", "");
+			addElement(h, "Token", token);
+			addElement(h, "Lang", context.getResources().getConfiguration().locale);
+			addElement(h, "SessionID", SessionID);
+			if (C.location != null) {
+				// +0.0065 0.0060 google location convert to BAIDU location
+				addElement(h, "Longitude", C.location.getLongitude() + 0.0065);
+				addElement(h, "Latitude", C.location.getLatitude() + 0.0060);
+			}
+		}
+		return h;
+	}
+
+	private void addElement(Element h, String name, Object o) {
+		if (o != null) {
+			Element e = new Element().createElement(namespace, name);
+			e.addChild(Node.TEXT, "" + o.toString());
+			h.addChild(Node.ELEMENT, e);
+		}
+	}
+
+	protected MyData getList(SoapObject v) {
+		MyData list = new MyData();
+		for (int i = 0; i < v.getPropertyCount(); i++) {
+
+			SoapObject so = (SoapObject) v.getProperty(i);
+			list.add(getRow(so));
+
+		}
+		return list;
+	}
+
+	protected String[] getStringArray(SoapObject v) {
+		String[] s = new String[v.getPropertyCount()];
+		for (int i = 0; i < v.getPropertyCount(); i++) {
+			Object so = (Object) v.getProperty(i);
+			s[i] = so.toString();
+		}
+		return s;
+	}
+
+	protected MyRow getRow(SoapObject so) {
+		MyRow row2 = new MyRow();
+		for (int j = 0; j < so.getPropertyCount(); j++) {
+			PropertyInfo pi = new PropertyInfo();
+			so.getPropertyInfo(j, pi);
+			String value = "";
+			if (pi.getType() == SoapPrimitive.class) {
+				value = pi.getValue().toString();
+				row2.put(pi.getName(), value);
+			} else if (pi.getType() == SoapObject.class) {
+				if ("anyType{}".equals(pi.getValue().toString())) {
+					continue;// ignore empty value
+				}
+				SoapObject v = (SoapObject) pi.getValue();
+				row2.put(pi.getName(), getList(v));
+			}
+
+		}
+		return row2;
+	}
+
+
+	public Result execute(Object... args) throws Exception {
+		return null;
+	}
+}

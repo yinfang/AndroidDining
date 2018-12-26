@@ -1,0 +1,382 @@
+package com.clubank.device;
+
+import java.util.Date;
+
+import android.content.Intent;
+import android.opengl.Visibility;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Toast;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+
+import com.clubank.dining.R;
+import com.clubank.domain.BC;
+import com.clubank.domain.C;
+import com.clubank.domain.RT;
+import com.clubank.domain.Result;
+import com.clubank.domain.S;
+import com.clubank.op.DeleteBillLock;
+import com.clubank.op.GetItemCategory;
+import com.clubank.op.SaveBill;
+import com.clubank.op.SinglePrint;
+import com.clubank.op.VerifyConsumeCard;
+import com.clubank.util.MyAsyncTask;
+import com.clubank.util.MyRow;
+import com.clubank.util.UI;
+
+/**
+ * 确认下单界面
+ *
+ * @author jishu0416
+ */
+public class SubmitConfirmActivity extends BaseAreaTableActivity {
+
+    private int DLG_SUBMIT_ORDER_SUCCESS = 13;
+    private int DLG_CONFIRM_SUBMIT = 1201;
+    private CheckBox chkPrintDish, BillResupplyDish;
+    private CheckBox waitForCall;
+    private boolean ALLCALLUP;
+    private EditText qo_card_no;
+    private boolean ORDER, clickOK = true;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.submit_confirm);
+        ALLCALLUP = getIntent().getBooleanExtra("ALLCALLUP", false);
+        chkPrintDish = (CheckBox) this.findViewById(R.id.printdish);
+        // chkPrintDish.setOnCheckedChangeListener(this);
+        chkPrintDish.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+                // TODO Auto-generated method stub
+                if (!arg1) {
+                    waitForCall.setEnabled(false);
+                    waitForCall.setChecked(false);
+                } else {
+                    BillResupplyDish.setChecked(false);
+                    waitForCall.setEnabled(true);
+                }
+
+            }
+        });
+        waitForCall = (CheckBox) this.findViewById(R.id.bookingdish);
+        BillResupplyDish = (CheckBox) this.findViewById(R.id.BillResupplyDish);
+        if (BC.type == 2) {
+            BillResupplyDish.setVisibility(View.VISIBLE);
+        }
+        BillResupplyDish.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+                // TODO Auto-generated method stub
+                if (arg1) {
+                    chkPrintDish.setChecked(false);
+                    waitForCall.setChecked(false);
+                }
+
+            }
+        });
+        init();
+
+        if (S.bill.TotalGuest == 0) {
+            S.bill.TotalGuest = 1;
+        }
+        setEText(R.id.totalGuest, String.valueOf(S.bill.TotalGuest)); // 人数
+        // setEText(R.id.memNo, S.bill.MemNo); // 会员卡
+        setEText(R.id.memNo, S.bill.CardNo);
+        setEText(R.id.guestName, S.bill.GuestName); // 姓名
+        setEText(R.id.remark, S.bill.DiningRemarks);
+        qo_card_no = (EditText) findViewById(R.id.memNo);
+        qo_card_no.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                qo_card_no.setTextColor(getResources().getColor(R.color.my_black));
+                // findViewById(R.id.row_identityName).setVisibility(View.GONE);
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
+        qo_card_no.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View arg0, boolean isFocus) {
+                if (!getEText(R.id.memNo).equals("") && !isFocus) {
+                    VerifyConsumeCard();
+                }
+            }
+        });
+    }
+
+    /**
+     * 校验消费卡号
+     */
+    private void VerifyConsumeCard() {
+        EditText cardNo = (EditText) findViewById(R.id.memNo);
+        String s = cardNo.getText().toString().trim();
+        if (!"".equals(s)) {
+            clickOK = false;
+            new MyAsyncTask(this, VerifyConsumeCard.class).execute(s, false);
+        }
+    }
+
+    /**
+     * 校验 Button
+     */
+    public void verify(View v) {
+        VerifyConsumeCard();
+    }
+
+    /**
+     * 确定下单
+     *
+     * @param view
+     */
+    public void submitConfirm(View view) {
+        if (clickOK) {//防止多次点击
+            if (S.bill.TableNo == null) {
+                UI.showError(this, R.string.msg_please_select_table);
+                return;
+            }
+            String totalGuest = getEText(R.id.totalGuest);
+            if (settings.getBoolean("guestsnum", false)) {
+                if (TextUtils.isEmpty(totalGuest)) {
+                    UI.showInfo(this, "请填写就餐人数");
+                    return;
+                } else {
+                    try {
+                        long nu = Long.parseLong(totalGuest);
+                    } catch (NumberFormatException e) {
+                        UI.showInfo(this, "请填写就餐人数");
+                        return;
+                    }
+                }
+            } else {
+                if (TextUtils.isEmpty(totalGuest)) {
+                    totalGuest = "1";
+                }
+            }
+
+            if (S.bill.TxDate == null) {
+                S.bill.TxDate = BC.df_yMd.format(new Date());
+            }
+
+//            if ("".equals(totalGuest)) {
+//                totalGuest = "1";
+//            }
+            S.bill.TableName = getEText(R.id.TableName);
+            S.bill.TotalGuest = Integer.valueOf(totalGuest);
+            // S.bill.MemNo = getEText(R.id.memNo);
+
+            S.bill.GuestName = getEText(R.id.guestName);
+            S.bill.DiningRemarks = getEText(R.id.remark);
+
+            if (!qo_card_no.getText().toString().equals("")) {
+                ORDER = true;
+                VerifyConsumeCard();
+            } else {
+                UI.showOKCancel(this, DLG_CONFIRM_SUBMIT, R.string.lbl_confirm_submit_order, R
+                        .string.msg_prompt);
+            }
+        }
+    }
+
+    /**
+     * 提交订单
+     *
+     * @param printDish
+     * @param waitForCall
+     */
+    public void submitOrder(boolean printDish, boolean waitForCall) {
+        for (int i = 0; i < S.bill.BillItems.size(); i++) {
+            if (S.bill.BillItems.get(i).IsUp) {
+                S.bill.BillItems.get(i).PrintType = getString(R.string.lbl_deliverDishes);
+            } else if (S.bill.BillItems.get(i).IsCallUp) {// 更具iscallup值。给打印type赋值
+                S.bill.BillItems.get(i).PrintType = getString(R.string.msg_planing_dish);
+            } else {
+                S.bill.BillItems.get(i).PrintType = getString(R.string.lbl_rightnow);
+            }
+        }
+        S.bill.OpenUser = S.userCode;
+        S.bill.PrintDish = printDish;
+        new MyAsyncTask(this, SaveBill.class).execute(S.bill, printDish, waitForCall);
+    }
+
+    @Override
+    public void onPostExecute(Class<?> op, Result result) {
+        super.onPostExecute(op, result);
+        clickOK = true;
+        /*
+         * if (result.code == RT.SERVER_ERROR) { UI.showError(this, op.getName()
+         * + result.obj); }
+         */
+        if (op == SaveBill.class) {
+            if (result.code == BC.RESULT_SUCCESS) {
+                String o = (String) result.obj;
+                if (o != null) {
+                    S.bill.BillCode = o;
+                    S.modified = false;
+                    // String s = String.format(
+                    // getText(R.string.msg_valid_card_no).toString(),
+                    // getEText(R.id.memNo));
+                    // Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+                    setEText(R.id.billCode, o);// SinglePrint
+                    if (BC.type == 2 && BillResupplyDish.isChecked()) {
+                        new MyAsyncTask(this, SinglePrint.class).execute(S.bill.BillCode);
+                    }
+
+                }
+                new MyAsyncTask(this, DeleteBillLock.class, false).execute(S.token, S.bill
+                        .BillCode);
+                UI.showOKCancel(this, DLG_SUBMIT_ORDER_SUCCESS, R.string.msg_submit_order_success, R.string.msg_prompt);
+
+            } else if (result.code == 1101) {
+                UI.showInfo(this, R.string.msg_orderhas_dismiss, 1221);
+            } else if (result.code == BC.RESULT_BILL_CHECKED_OUT) {
+                UI.showError(this, R.string.msg_bill_checked_out);
+            } else if (result.code == BC.RESULT_UNCHARGEABLE_BILL) {
+                UI.showError(this, R.string.msg_unchargeable_bill);
+            } else if (result.code == BC.RESULT_CONSUME_CARD_EXPIRED) {
+                UI.showError(this, R.string.msg_consume_card_expired);
+            } else if (result.code == BC.RESULT_CONSUME_CARD_LEVEL) {
+                UI.showError(this, R.string.msg_consume_card_level);
+            }
+        } else if (op == VerifyConsumeCard.class) {
+            String cardno = getEText(R.id.memNo);
+            int color = R.color.my_black;
+            if (result.code == BC.RESULT_SUCCESS) {
+                MyRow info = (MyRow) result.obj;
+                afterVerifiedCard(info);
+                S.bill.CardNo = cardno;
+                /*
+                 * String s = String.format(getText(R.string.msg_valid_card_no)
+                 * .toString(), cardno);
+                 */
+                // UI.showInfo(this, s, 0);
+                // setEText(R.id.identityName, info.getString("IdentityName"));
+                // findViewById(R.id.row_identityName).setVisibility(View.VISIBLE);
+                // 通过点击开台进行消费卡号
+                // Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+                color = R.color.green5;
+                if (ORDER) {
+                    UI.showOKCancel(this, DLG_CONFIRM_SUBMIT, R.string.lbl_confirm_submit_order,
+                            R.string.msg_prompt);
+                }
+            } else if (result.code == BC.RESULT_INVALID_CONSUME_CARD) {
+                String s = String.format(getText(R.string.msg_invalid_card_no).toString(), cardno);
+                UI.showError(this, s);
+                setEText(R.id.memNo, "");
+                findViewById(R.id.memNo).requestFocus();
+                // 未登记的消费卡号
+            } else if (result.code == BC.RESULT_REGIST_CONSUME_CARD) {
+                color = R.color.red;
+                UI.showInfo(this, R.string.lbl_codeNOregist);
+            } else if (result.code == BC.RESULT_BILL_CHECKED_OUT) {
+                UI.showError(this, R.string.msg_bill_checked_out);
+            } else if (result.code == BC.RESULT_UNCHARGEABLE_BILL) {
+                UI.showError(this, R.string.msg_unchargeable_bill);
+            } else if (result.code == BC.RESULT_CONSUME_CARD_LEVEL) {
+                UI.showError(this, R.string.msg_consume_card_level);
+            }
+            qo_card_no.setTextColor(getResources().getColor(color));
+            ORDER = false;
+        } else if (op == DeleteBillLock.class) {
+            if (result.code == BC.RESULT_SUCCESS) {
+                // super.back();
+            } else if (result.code == BC.LOGIN_OUT_TIME) {
+                if (BC.type != 2) {//吉云轩版本不提示登陆过期 2016.10.10
+                    UI.showError(this, getResources().getString(R.string.relogin), 3007, "");
+                }
+            }
+        } else if (op == SinglePrint.class) {
+            if (result.code == BC.RESULT_SUCCESS) {
+                // super.back();
+            }
+        }
+    }
+
+    /**
+     * 验证成功后，设置姓名
+     *
+     * @param info
+     */
+    private void afterVerifiedCard(MyRow info) {
+
+        EditText guestName = (EditText) findViewById(R.id.guestName);
+        guestName.setText((String) info.get("GuestName"));
+        /*
+         * EditText memno = (EditText) findViewById(R.id.qo_mem_no);
+         * memno.setText((String) info.get("MemNo"));
+         */
+    }
+
+    @Override
+    public void processDialogOK(int type, Object tag) {
+        if (type == DLG_CONFIRM_SUBMIT) {
+            clickOK = false;
+            submitOrder(chkPrintDish.isChecked(), ALLCALLUP);
+            // submitOrder(chkPrintDish.isChecked(), waitForCall.isChecked());
+        } else if (type == DLG_SUBMIT_ORDER_SUCCESS) {// 下单成功，返回结果给下单界面
+            String billcode = S.bill.BillCode;
+            Intent it = new Intent(this, CheckoutPaymentActivity.class);
+            it.putExtra("code", S.bill.TableNo);
+            it.putExtra("title", getString(R.string.checkout_consumption_checkout));
+            it.putExtra("billcode", billcode);
+            it.putExtra("prices", S.bill.TotalPayable);
+            startActivity(it);
+            finish();
+        } else if (type == 1221) {
+            setResult(RESULT_OK, null);
+            finish();
+        } else if (type == 3007) {
+            biz.openLoginActivity();
+        }
+        super.processDialogOK(type, tag);
+    }
+
+    @Override
+    public void processDialogCancel(int type, Object tag) {
+        if (type == DLG_SUBMIT_ORDER_SUCCESS) {// 下单成功，返回结果给下单界面
+            if (getIntent().getStringExtra("from").equals("quickOpen")) {
+                String date = BC.df_yMd.format(new Date());
+                String condition = date + "  " + getEText(R.id.AreaName);
+                Intent intent = new Intent(this, ChargeListActivity.class);
+                intent.putExtra("title", UI.getText(this, "menu_Charge"));
+                intent.putExtra("condition", condition);
+                intent.putExtra("date", date);
+                intent.putExtra("areaCode", AreaCode);
+                intent.putExtra("code", S.bill.TableNo);
+                intent.putExtra("from", "quickOpen");
+                startActivity(intent);
+                finish();
+            } // OrderOrderedActivity
+            setResult(RESULT_OK, null);
+            // BU.goTableCenter(this);
+            finish();
+            super.processDialogCancel(type, tag);
+        }
+    }
+
+    /**
+     * 取消
+     *
+     * @param view
+     */
+    public void cancel(View view) {
+        finish();
+    }
+}

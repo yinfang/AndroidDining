@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="default_circle_indicator_centered">true</bool>
+    <bool name="default_circle_indicator_snap">false</bool>
+    <bool name="default_line_indicator_centered">true</bool>
+    <bool name="default_title_indicator_selected_bold">true</bool>
+    <bool name="default_underline_indicator_fades">true</bool>
+
+    <integer name="default_circle_indicator_orientation">0</integer>
+    <integer name="default_title_indicator_footer_indicator_style">2</integer>
+    <integer name="default_underline_indicator_fade_delay">300</integer>
+    <integer name="default_underline_indicator_fade_length">400</integer>
+    <integer name="map_popup_text_offset">-85</integer>
+    <!-- listview 上下拉回弹效果最大回弹距离 -->
+    <integer name="bounce_listview_max_y_overscroll_distance">150</integer>
+
+    <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
+    <color name="default_line_indicator_selected_color">#FF33B5E5</color>
+    <color name="default_line_indicator_unselected_color">#FFBBBBBB</color>
+    <color name="default_title_indicator_footer_color">#FF33B5E5</color>
+    <color name="default_title_indicator_selected_color">#FFFFFFFF</color>
+    <color name="default_underline_indicator_selected_color">#FF33B5E5</color>
+    <color name="default_title_indicator_text_color">#BBFFFFFF</color>
+    <color name="default_share_bgcolor">#ffe1e1e1</color>
+    <color name="default_share_item_bgcolor">#FFFFFFFF</color>
+    <color name="default_share_item_txtcolor">#000000</color>
+    <color name="default_image_grid_item_text_bg">#33414141</color>
+    <color name="default_image_grid_item_text_color">#000000</color>
+    <color name="list_odd">#ffffff</color>
+    <color name="list_even">#f7f7f7</color>
+    
+    
+          <!-- 分享默认颜色和点击颜色如需修改请在项目中命名相同name -->
+      <color name="share_background">#ffffff</color>
+      <color name="share_pressed">#f7f7f7</color>
+      
+</resources>

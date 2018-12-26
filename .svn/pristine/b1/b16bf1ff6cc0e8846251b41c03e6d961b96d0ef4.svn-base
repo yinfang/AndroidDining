@@ -1,0 +1,275 @@
+package com.clubank.device;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.clubank.dining.R;
+import com.clubank.domain.BC;
+import com.clubank.domain.ESubmitType;
+import com.clubank.domain.Result;
+import com.clubank.domain.S;
+import com.clubank.op.CheckSoldOut;
+import com.clubank.util.IconContextMenu;
+import com.clubank.util.IconContextMenuOnClickListener;
+import com.clubank.util.MyAsyncTask;
+import com.clubank.util.MyData;
+import com.clubank.util.MyRow;
+import com.clubank.util.UI;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
+/**
+ * 快速点菜那也要象可选菜品一样，直接点击，可以去改口味和数量
+ */
+public class OrderQuickOrderActivity extends OrderActionActivity implements
+        OnItemClickListener {
+
+
+    private DishAdapter da;
+    private MyData dishes = new MyData();
+    private int pos;
+    private final int CMENU_DISH = 1;
+    private IconContextMenu m;
+    private MyRow dish;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.quick_order);
+        // setVisibility("header_menu_scan", View.GONE);
+        ListView listView = (ListView) findViewById(R.id.lvw_qo_dish);
+        da = new DishAdapter(this, dishes);
+        listView.setAdapter(da);
+        listView.setOnItemClickListener(this);
+        AdapterView.OnItemLongClickListener ilc = new ItemLongClickListener();
+        listView.setOnItemLongClickListener(ilc);
+        // 刚进入时隐藏输入键盘，出现软键盘时，不挤压屏幕空间
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        EditText dishCode = (EditText) findViewById(R.id.qo_dish_code);
+        boolean quickInputLockNumber = settings.getBoolean(
+                "quickInputLockNumber", false);
+        if (quickInputLockNumber) {
+            dishCode.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+
+        dishCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                listDish(s.toString());
+            }
+        });
+
+    }
+
+    public void search(View view) {
+        listDish(getEText(R.id.qo_dish_code));
+    }
+
+    private void listDish(String keyword) {
+
+        String sql = "select Code,Name,Price,HPrice,CanDiscount,Soldout,Category,Pricing,ComposeType " +
+                "from t_dish where shortcut like ? or name like ? or code like ? limit 10";
+        String[] a = new String[]{"%" + keyword + "%", "%" + keyword + "%",
+                keyword + "%"};
+        dishes = db.getData(sql, a);
+        da.clear();
+        for (MyRow row : dishes) {
+            da.add(row);
+        }
+        da.notifyDataSetChanged();
+
+    }
+
+    // @Override
+    // public void afterWork(int id, Result result) {
+    // if (id == WORK_LOAD_DISH) {
+    // dishes = (MyData) result.obj;
+    // da.clear();
+    // for (MyRow row : dishes) {
+    // da.add(row);
+    // }
+    // da.notifyDataSetChanged();
+    // }
+    // }
+
+    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+        dish = (MyRow) arg0.getItemAtPosition(arg2);
+        for (int i = 0; i < dish.size(); i++) {
+//            Log.d("DISHHHH",dish.keyAt(i)+" : "+dish.valueAt(i).toString());
+        }
+
+        SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd "); //HH:mm:ss
+        dff.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        String ee = dff.format(new Date());
+        if (BC.engineerMode){
+            successSoldOut();
+        }else {
+            new MyAsyncTask(OrderQuickOrderActivity.this, CheckSoldOut.class).execute(ee, dish.get("Code"), 1);   //检查估清
+        }
+
+
+//		MyRow dish = (MyRow) arg0.getItemAtPosition(arg2);
+        // arg0.getChildAt(arg2).setBackgroundColor(Color.BLUE);
+    }
+
+    public void clear(View view) {
+        setEText(R.id.qo_dish_code, "");
+    }
+
+    class ItemLongClickListener implements OnItemLongClickListener {
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+            // Dish dish = (Dish) arg0.getItemAtPosition(arg2);
+            final MyRow dish = dishes.get(arg2);
+            if (S.orderMode
+                    && !dish.get("SoldOut").equals("true")
+                    && S.bill.getItem(dish.getString("Code"),
+                    ESubmitType.Submitted) == null
+
+                    ) {
+                pos = arg2;
+                Dialog d = createDialog(CMENU_DISH, arg2);
+                if (d != null) {
+                    d.show();
+                }
+            }
+
+
+            return true;
+        }
+    }
+
+    private Dialog createDialog(int id, Object tag) {
+        if (id == CMENU_DISH) {
+            final MyRow dish = dishes.get(pos);
+            m = new IconContextMenu(this, tag);
+            if (S.orderMode
+                    && !dish.get("SoldOut").equals("true")
+                    && S.bill.getItem(dish.getString("Code"),
+                    ESubmitType.Submitted) == null
+
+                    ) {
+                m.add(R.string.menu_order, R.drawable.adddish, BC.MENU_ORDER);
+            }
+            m.setOnClickListener(new IconContextMenuOnClickListener() {
+                @Override
+                public void onClick(int menuId) {
+                    switch (menuId) {
+                        case BC.MENU_ORDER:
+                            customOrder(OrderQuickOrderActivity.this, dish, da);
+                            break;
+                    }
+                }
+            });
+
+            return m.createMenu((String) dish.get("Name"));
+        }
+        return null;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 12345) {
+            if (data != null) {
+                String flavor = data.getStringExtra("flavor");
+                String flavorCode = data.getStringExtra("flavorCode");
+                TextView tv = (TextView) parentview.findViewById(R.id.cooking_flavor);
+                tv.setText(flavor);
+                flavorString = flavorCode;
+            }
+        }
+
+        if (requestCode == 23456) {
+            if (settings.getBoolean("kitchentype", BC.showKitchenType)) {
+                if (data != null) {
+                    String cookieType = data.getStringExtra("kitchenTypeName");
+                    TextView textView = (TextView) parentview.findViewById(R.id.tv_cooking_type);
+                    textView.setText(cookieType);
+                    String kitchenTypeCode = data.getStringExtra("kitchenTypeCode");
+                    kitchenType = kitchenTypeCode;
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void onPostExecute(Class<?> op, Result result) {
+        super.onPostExecute(op, result);
+        if (op == CheckSoldOut.class) {
+            if (result.code == 0) {
+                UI.showToast(this, "此菜品已沽清");
+                return;
+            } else if (result.code == 1) {
+                successSoldOut();
+            }
+        }
+    }
+
+
+    private void successSoldOut(){
+        if (!dish.getBoolean("SoldOut")
+                && S.bill.getItem(dish.getString("Code"), ESubmitType.All) == null) {
+            this.pos = pos;
+            if (popupQtyWindow) {
+                customOrder(OrderQuickOrderActivity.this, dish, da);
+            } else {
+                addprice = 0;
+                MyData packageDetail = null;
+                //套餐加入套餐明细到订单列表
+                if (dish.getInt("ComposeType") == 3) {
+                    String sql = "select ParentCode,ItemCode,ItemName,IfCahnge,Pricing,Updated,ExtCode from t_PackageDish where ParentCode=? ";
+                    String[] a = new String[]{dish.getString("Code")};
+                    packageDetail = db.getData(sql, a);
+
+                }
+                //套餐
+                if (dish.getInt("ComposeType") == 3) {
+                    dish.put("IfPackage", 1);
+                    order(dish, 1, 0, "", "", "", da);
+                    if (packageDetail != null) {
+                        for (MyRow packageDish : packageDetail) {
+                            packageDish.put("PackageCode", dish.getString("Code"));
+                            packageDish.put("IfPackage", 2);
+                            packageDish.put("ComposeType", 3);
+                            order(packageDish, 1, 0, "", "", "", da);
+                        }
+                    }
+                } else {
+                    order(dish, 1, 0, "", "", "", da);
+                }
+            }
+        }
+    }
+}

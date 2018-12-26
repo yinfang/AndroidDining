@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\StudioProject\Dining\common(new)\assets"><file name="config.json" path="D:\StudioProject\Dining\common(new)\assets\config.json"/><file name="config.properties" path="D:\StudioProject\Dining\common(new)\assets\config.properties"/></source><source path="D:\StudioProject\Dining\common(new)\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\StudioProject\Dining\common(new)\build-types\debug\assets"/></dataSet></merger>

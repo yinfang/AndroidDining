@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/pref_cat_communication">
+		<EditTextPreference android:key="server_address"
+			android:title="@string/pref_server_address" android:summary="@string/pref_server_address_summary"
+			android:dialogTitle="@string/pref_server_address"
+			android:defaultValue="192.168.0.122" />
+		<EditTextPreference android:key="server_port"
+			android:title="@string/pref_server_port" android:summary="@string/pref_server_port_summary"
+			android:dialogTitle="@string/pref_server_port" android:defaultValue="8325" />
+		<EditTextPreference android:key="socket_timeout"
+			android:title="@string/pref_socket_timeout" android:summary="@string/pref_socket_timeout_summary"
+			android:dialogTitle="@string/pref_socket_timeout"
+			android:defaultValue="5000" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_dining">
+		<CheckBoxPreference android:key="popup_qty_window"
+			android:title="@string/pref_popup_qty_window"
+			android:defaultValue="true" android:summary="@string/pref_popup_qty_window_summary">
+		</CheckBoxPreference>
+		<CheckBoxPreference android:key="report_printer_error"
+			android:title="@string/pref_report_printer_error"
+			android:defaultValue="true" android:summary="@string/pref_report_printer_error_summary">
+		</CheckBoxPreference>
+		<EditTextPreference android:key="printer_alert_period"
+			android:title="@string/pref_printer_alert_period" android:summary="@string/pref_printer_alert_period_summary"
+			android:dialogTitle="@string/pref_printer_alert_period"
+			android:defaultValue="3" android:dependency="report_printer_error" />
+		<CheckBoxPreference android:key="printer_alert_sound"
+			android:title="@string/pref_printer_alert_sound"
+			android:defaultValue="true" android:summary="@string/pref_printer_alert_sound_summary"
+			android:dependency="report_printer_error">
+		</CheckBoxPreference>
+		<CheckBoxPreference android:key="printer_alert_vibrate"
+			android:title="@string/pref_printer_alert_vibrate"
+			android:defaultValue="true" android:summary="@string/pref_printer_alert_vibrate_summary"
+			android:dependency="report_printer_error">
+		</CheckBoxPreference>
+
+	</PreferenceCategory>
+</PreferenceScreen>

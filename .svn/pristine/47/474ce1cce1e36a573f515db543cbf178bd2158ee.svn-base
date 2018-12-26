@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/orderd"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/my_layout_ordered"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/choosebackground"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/header"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="0dp"
+                android:layout_height="40dip"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/msg_bill_code"
+                    android:textColor="#505050"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/billCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/lbl_new_bill"
+                    android:textColor="@color/my_cyan"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="3dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/msg_dish_total"
+                    android:textColor="#505050"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/msg_dish_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:selectAllOnFocus="true"
+                    android:text="0"
+                    android:textColor="@color/my_yellow"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="3dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/msg_bill_total"
+                    android:textColor="#505050"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/ordered_total_payable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:selectAllOnFocus="true"
+                    android:text="0.00"
+                    android:textColor="@color/my_yellow"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvw_ordered"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@color/list_divider"
+            android:dividerHeight="1dp"
+            android:listSelector="@drawable/lvi"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom|center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/button_band"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:paddingLeft="15dp">
+
+                <Button
+                    android:id="@+id/callupbutton"
+                    android:layout_width="100dp"
+                    android:layout_height="40dip"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="callUp"
+                    android:text="@string/msg_planing_dish"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/up"
+                    android:layout_width="100dp"
+                    android:layout_height="40dip"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="up"
+                    android:text="@string/lbl_deliverDishes"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/submit_confirm"
+                    android:layout_width="100dp"
+                    android:layout_height="40dip"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="submitConfirm"
+                    android:text="@string/menu_submit_order"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/charge_bill"
+                    android:layout_width="100dp"
+                    android:layout_height="40dip"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="chargeBill"
+                    android:text="@string/menu_charge_order"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/pay_bill"
+                    android:layout_width="100dp"
+                    android:layout_height="40dip"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="PayBill"
+                    android:text="@string/menu_pay_order"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/buttonPrint"
+                    android:layout_width="100dp"
+                    android:layout_height="40dip"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="printDish"
+                    android:text="@string/menu_print_dish"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/cancelPrint"
+                    android:layout_width="100dp"
+                    android:layout_height="40dip"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/choosebutton"
+                    android:onClick="cancelPrintDish"
+                    android:text="@string/menu_cancel_dish"
+                    android:textColor="@drawable/choosebuttontext"
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <include
+                layout="@layout/actionbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="#99000000"
+        android:clickable="true"
+        android:onClick="closeImage"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="85dp"
+            android:contentDescription="@string/lbl_contentDesc"
+            android:src="@drawable/tip_dish_menu" />
+    </LinearLayout>
+
+</FrameLayout>

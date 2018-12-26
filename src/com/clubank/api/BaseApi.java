@@ -1,0 +1,204 @@
+package com.clubank.api;
+
+
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.clubank.dining.R;
+import com.clubank.domain.BC;
+import com.clubank.domain.C;
+import com.clubank.domain.Result;
+import com.clubank.domain.S;
+import com.clubank.util.MyData;
+import com.clubank.util.MyRow;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+public class BaseApi {
+
+    protected Context sContext;
+
+    public BaseApi(Context context) {
+        this.sContext = context;
+    }
+
+    /**
+     * get Observable
+     *
+     * @param func
+     * @param row
+     * @return
+     */
+    protected Observable<Result> getObservable(final String func, final MyRow row) {
+        return Observable.create(new Observable.OnSubscribe<Result>() {
+            @Override
+            public void call(Subscriber<? super Result> subscriber) {
+                String err = sContext.getString(R.string.network_problem);
+
+                if (!NetStatusUtil.isConnected(sContext)) {
+                    subscriber.onError(new Throwable(err));
+                    return;
+                }
+                Result result = null;
+                try {
+                    result = get(func, row);
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    subscriber.onError(new Throwable(err));
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private Result get(String methodName, MyRow args) throws Exception {
+        Result result = null;
+
+        //get url
+        String url = getUrlParameter(methodName, args);
+
+        Log.d("Request", url);
+        String body = OkHttpHelper.getInstance().get(url);
+        Log.d("Response", methodName + body);
+        result = getResult(body);
+        return result;
+    }
+
+    /**
+     * 构造URL参数
+     *
+     * @param methodName
+     * @param args
+     * @return
+     */
+    private String getUrlParameter(String methodName, MyRow args) {
+
+        StringBuilder parameter = new StringBuilder();
+        //get URL
+        if (BC.payWsUrl == null) {
+            BC.payWsUrl = PreferenceHelper.getInstance(sContext).getString("wsUrl", "");
+        }
+        parameter.append(BC.payWsUrl);
+        String token = PreferenceHelper.getInstance(sContext).getString("token", "");
+        String clubid = PreferenceHelper.getInstance(sContext).getString("CLUB_ID", "");
+
+        parameter.append("?action=" + methodName);
+        parameter.append("&token=" + S.token);
+        parameter.append("&clubid=" + clubid);
+        for (String key : args.keySet()) {
+            Object o = args.get(key);
+            parameter.append("&");
+            parameter.append(key);
+            parameter.append("=");
+            parameter.append(o);
+        }
+
+        return parameter.toString();
+    }
+
+    /**
+     * 从json中解析结果
+     *
+     * @param body
+     * @return
+     */
+    private Result getResult(String body) throws Exception {
+        Result result = new Result();
+        result.code = BC.UNKNOWN_ERROR;
+        result.msg = "";
+        result.data = new MyData();
+        if (TextUtils.isEmpty(body)) {
+            result.code = BC.CLUB_OFFLINE;
+            return result;
+        }
+        try {
+            JSONObject jobj = new JSONObject(body);    //JSON.parseObject(body);
+            if (jobj == null) {
+                return result;
+            }
+            if (jobj.getInt("rel") != BC.RESULT_SUCCESS) {
+                result.code = jobj.getInt("rel");
+                result.msg = jobj.getString("msg");
+                return result;
+            }
+            result.code = BC.RESULT_SUCCESS;
+            result.msg = jobj.getString("msg");
+            if (jobj.has("token")) {
+                result.token = jobj.getString("token");
+            }
+            if (jobj.has("data")) {
+                Object obj = jobj.get("data");
+                result.data = decodeJSONData(obj);
+            }
+        } catch (Exception ex) {
+            result.code = BC.CLUB_OFFLINE;
+            Log.d("error", ex.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
+    private MyData decodeJSONData(Object obj) throws Exception {
+        MyData list = new MyData();
+        if (obj instanceof JSONArray) {
+            JSONArray jsonArr = (JSONArray) obj;
+            //遍历JSONArray
+            for (int i = 0; i < jsonArr.length(); i++) {
+                JSONObject jobj = jsonArr.getJSONObject(i);
+                MyRow row1 = decodeJSONRow(jobj);
+                list.add(row1);
+            }
+        } else if (obj instanceof JSONObject) {
+            JSONObject jobj = (JSONObject) obj;
+            MyRow row2 = decodeJSONRow(jobj);
+            list.add(row2);
+        } else if (obj instanceof String
+                || obj instanceof Integer
+                || obj instanceof Boolean
+                || obj instanceof Double
+                || obj instanceof Float) {
+            MyRow row3 = new MyRow();
+            row3.put("data", getObject(obj));
+            list.add(row3);
+        }
+        return list;
+    }
+
+    private MyRow decodeJSONRow(JSONObject jobj) throws Exception {
+        MyRow row = new MyRow();
+        Iterator<String> keys = jobj.keys();
+        Object obj;
+        String key;
+        while (keys.hasNext()) {
+            key = keys.next();
+            obj = jobj.get(key);
+            row.put(key, getObject(obj));
+        }
+        return row;
+    }
+
+    private String getObject(Object obj) {
+        if (obj == null) {
+            return "";
+        }
+        String str = obj.toString();
+        if (TextUtils.isEmpty(str)) {
+            return "";
+        }
+        if (str.equals("null")) {
+            return "";
+        }
+        return str;
+    }
+}

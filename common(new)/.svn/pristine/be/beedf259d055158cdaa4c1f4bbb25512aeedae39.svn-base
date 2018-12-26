@@ -1,0 +1,156 @@
+package com.clubank.map;
+
+import java.util.ArrayList;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.TextOptions;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.model.LatLngBounds.Builder;
+import com.clubank.common.R;
+import com.clubank.domain.C;
+import com.clubank.domain.Point;
+
+//import android.graphics.Canvas;
+
+@SuppressLint("Registered")
+public class MyPointsMapActivity extends BaseActivity implements
+		OnMarkerClickListener {
+
+	// private RouteOverlay routeOverlay;
+	private MapView mMapView;
+	private BaiduMap mBaiduMap;
+
+	private BitmapDescriptor bdA;
+	private Marker[] markers;
+
+	private int icon_mark;
+	private int bgColor;
+	private int fontColor;
+	/**
+	 * 引用本Activity的Activity的类名
+	 */
+	private String callerName;
+	private ArrayList<Point> points;
+
+	@SuppressWarnings("unchecked")
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Bundle b = getIntent().getExtras();
+		int layout = b.getInt(C.MAP_LAYOUT, R.layout.my_map);
+		setContentView(layout);
+		hide(R.id.row_route);
+		mMapView = (MapView) findViewById(R.id.bmapView);
+		mBaiduMap = mMapView.getMap();
+		icon_mark = b.getInt(C.MARK_ICON, R.drawable.icon_marka);
+		bgColor = b.getInt(C.BG_COLOR, 0xAAFF0000);
+		fontColor = b.getInt(C.BG_COLOR, 0xFFFFFFFF);
+		callerName = b.getString(C.CALLER_NAME);
+		int zoomLevel = b.getInt(C.ZOOM_LEVEL, 17);
+		points = (ArrayList<Point>) b.getSerializable(C.POINTS);
+		showPoints(zoomLevel, icon_mark, bgColor, fontColor);
+	}
+
+	protected void showPoints(int zoomLevel, int icon, int bgColor,
+			int fontColor) {
+		bdA = BitmapDescriptorFactory.fromResource(icon);
+
+		markers = new Marker[points.size()];
+		LatLngBounds.Builder builder = new Builder();
+
+		for (int i = 0; i < points.size(); i++) {
+			Bundle b1 = new Bundle();
+			b1.putInt("index", i);
+
+			/* 画文字 */
+			Point pt = points.get(i);
+			LatLng p = new LatLng(pt.latitude, pt.longitude);
+
+			OverlayOptions ooText = new TextOptions().bgColor(bgColor)
+					.fontSize(36).fontColor(fontColor).text(pt.name)
+					.position(p);
+			mBaiduMap.addOverlay(ooText);
+
+			/* 水滴Marker 可点击 */
+			OverlayOptions ooA = new MarkerOptions().position(p).icon(bdA)
+					.title(pt.name).zIndex(0);
+			markers[i] = (Marker) mBaiduMap.addOverlay(ooA);
+			markers[i].setExtraInfo(b1);
+
+			builder.include(p);
+		}
+
+		// LatLng center = getCenter(points);
+		// MapStatusUpdate s2 = MapStatusUpdateFactory.newLatLng(center);
+		// mBaiduMap.animateMapStatus(s2);
+
+		LatLngBounds bounds = builder.build();
+		MapStatusUpdate u = MapStatusUpdateFactory.newLatLngBounds(bounds);
+		mBaiduMap.animateMapStatus(u);
+
+		MapStatusUpdate s1 = MapStatusUpdateFactory.zoomTo(zoomLevel);
+		mBaiduMap.setMapStatus(s1);
+
+		mBaiduMap.setOnMarkerClickListener(this);
+		bdA.recycle();
+
+	}
+
+	public boolean onMarkerClick(final Marker marker) {
+		Bundle b1 = marker.getExtraInfo();
+		int index = b1.getInt("index");
+		/* 执行引用Activity的方法以便回调地图节点事件 */
+		app.getActivity(callerName).onMapItemClick(index);
+		return true;
+	}
+
+	@Override
+	protected void onPause() {
+		mMapView.onPause();
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		mMapView.onResume();
+		super.onResume();
+	}
+
+	@Override
+	protected void onDestroy() {
+		mMapView.onDestroy();
+		super.onDestroy();
+		// 回收 bitmap 资源
+		bdA.recycle();
+	}
+
+	// private LatLng getCenter(List<Point> points) {
+	// double min_lat = Integer.MAX_VALUE;
+	// double max_lat = Integer.MIN_VALUE;
+	// double min_lon = Integer.MAX_VALUE;
+	// double max_lon = Integer.MIN_VALUE;
+	// for (Point pt : points) {
+	// min_lat = Math.min(pt.latitude, min_lat);
+	// max_lat = Math.max(pt.latitude, max_lat);
+	// min_lon = Math.min(pt.longitude, min_lon);
+	// max_lon = Math.max(pt.longitude, max_lon);
+	// }
+	// LatLng gpt = new LatLng((min_lat + max_lat) / 2,
+	// (min_lon + max_lon) / 2);
+	// return gpt;
+	// }
+	//
+
+}

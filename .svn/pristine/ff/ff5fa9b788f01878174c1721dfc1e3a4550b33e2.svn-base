@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/choosebackground"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.clubank.device.CheckoutPaymentActivity">
+
+    <include
+        layout="@layout/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkout_total_payment"
+                android:textColor="@color/red"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/red"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="@string/payment_method"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/radgroup_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <RadioButton
+                    android:id="@+id/radio_ylpay"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/icon_unionpay"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/pay_checkbox"
+                    android:paddingLeft="10dp"
+                    android:text="@string/checkout_pay_yl"
+                    android:textColor="@color/black" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <RadioButton
+                    android:id="@+id/radio_wechat"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/wechat_pay"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="10dp"
+                    android:text="@string/checkout_pay_wechat"
+                    android:textColor="@color/black" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <RadioButton
+                    android:id="@+id/radio_alipay"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/alipay"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="10dp"
+                    android:text="@string/checkout_pay_alipay"
+                    android:textColor="@color/black" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <RadioButton
+                    android:id="@+id/radio_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/icon_purse"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="10dp"
+                    android:text="@string/checkout_pay_post"
+                    android:textColor="@color/black" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+
+                <RadioButton
+                    android:id="@+id/radio_cash"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/pay_cash"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="10dp"
+                    android:text="@string/checkout_pay_cash"
+                    android:textColor="@color/black" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/list_divider" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="40dp"
+            android:background="@drawable/longchoosebutton"
+            android:clickable="true"
+            android:onClick="doWork"
+            android:text="@string/checkout_pay"
+            android:textColor="@drawable/choosebuttontext" />
+
+    </LinearLayout>
+</LinearLayout>
